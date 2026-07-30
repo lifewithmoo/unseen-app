@@ -15,6 +15,7 @@ type CartItem = {
   price: string;
   image: string;
   size: string;
+  quantity: number;
 };
 
 
@@ -29,6 +30,7 @@ type CartContextType = {
 
 
 const CartContext = createContext<CartContextType | null>(null);
+
 
 
 
@@ -59,16 +61,59 @@ export function CartProvider({
 
 
 
+
   function addToCart(item: CartItem) {
 
 
-    const updatedCart = [
-      ...cart,
-      item,
-    ];
+    const existingItem = cart.find(
+      (cartItem) =>
+        cartItem.id === item.id &&
+        cartItem.size === item.size
+    );
+
+
+
+    let updatedCart: CartItem[];
+
+
+
+    if (existingItem) {
+
+
+      updatedCart = cart.map((cartItem) =>
+
+        cartItem.id === item.id &&
+        cartItem.size === item.size
+
+          ? {
+              ...cartItem,
+              quantity: cartItem.quantity + 1,
+            }
+
+          : cartItem
+
+      );
+
+
+
+    } else {
+
+
+      updatedCart = [
+        ...cart,
+        {
+          ...item,
+          quantity: 1,
+        },
+      ];
+
+
+    }
+
 
 
     setCart(updatedCart);
+
 
 
     localStorage.setItem(
@@ -78,6 +123,7 @@ export function CartProvider({
 
 
   }
+
 
 
 
@@ -91,7 +137,9 @@ export function CartProvider({
     );
 
 
+
     setCart(updatedCart);
+
 
 
     localStorage.setItem(
@@ -106,10 +154,13 @@ export function CartProvider({
 
 
 
+
+
   function clearCart() {
 
 
     setCart([]);
+
 
 
     localStorage.removeItem("cart");
@@ -122,11 +173,22 @@ export function CartProvider({
 
 
 
+
+
   const total = cart.reduce(
+
     (sum, item) =>
-      sum + Number(item.price.replace("$", "")),
+
+      sum +
+
+      Number(item.price.replace("$", "")) *
+
+      item.quantity,
+
     0
+
   );
+
 
 
 
@@ -154,6 +216,8 @@ export function CartProvider({
   );
 
 }
+
+
 
 
 

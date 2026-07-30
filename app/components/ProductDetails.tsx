@@ -1,98 +1,155 @@
 "use client";
 
 import { useState } from "react";
-import SizeSelector from "@/app/components/SizeSelector";
 import { useCart } from "@/app/context/CartContext";
+import SizeSelector from "./SizeSelector";
 
-type Props = {
-  product: {
-    id: string;
-    name: string;
-    price: string;
-    image: string;
-  };
+
+type Product = {
+  id: string;
+  name: string;
+  price: string;
+  image: string;
+  hoverImage: string;
 };
 
-export default function ProductDetails({ product }: Props) {
 
-  const [size, setSize] = useState("");
+type Props = {
+  product: Product;
+};
+
+
+
+export default function ProductDetails({
+  product,
+}: Props) {
+
 
   const { addToCart } = useCart();
 
 
+  const [selectedSize, setSelectedSize] = useState("");
+
+
+
   function handleAddToCart() {
 
-    if (!size) {
+
+    if (!selectedSize) {
+
       alert("Please select a size");
+
       return;
+
     }
 
 
+
     addToCart({
+
       id: product.id,
+
       name: product.name,
+
       price: product.price,
+
       image: product.image,
-      size: size,
+
+      size: selectedSize,
+
+      quantity: 1,
+
     });
 
 
-    alert("Added to cart ✓");
+    alert("Added to cart");
+
+
   }
 
 
+
+
+
   return (
-    <div className="sticky top-36 h-fit">
 
-      <p className="text-sm uppercase tracking-[0.5em] text-red-500">
-        DROP 01
-      </p>
+    <div className="space-y-8">
 
 
-      <h1 className="mt-5 text-6xl font-black uppercase">
-        {product.name}
-      </h1>
+      <div>
+
+        <p className="text-sm uppercase tracking-[0.5em] text-red-500">
+          DROP 01
+        </p>
 
 
-      <p className="mt-8 text-4xl font-black text-red-500">
-        {product.price}
-      </p>
+        <h1 className="mt-5 text-6xl font-black uppercase">
+          {product.name}
+        </h1>
 
 
-      <p className="mt-8 leading-8 text-zinc-400">
+        <p className="mt-8 text-4xl font-black text-red-500">
+          {product.price}
+        </p>
+
+
+      </div>
+
+
+
+
+      <p className="leading-8 text-zinc-400">
+
         Premium heavyweight cotton.
         <br />
         Oversized fit.
         <br />
+        Designed for everyday wear.
+        <br />
         Limited production.
+
       </p>
 
 
+
+
+
       <SizeSelector
-        onSizeChange={(selected) => setSize(selected)}
+        selectedSize={selectedSize}
+        setSelectedSize={setSelectedSize}
       />
 
 
+
+
+
       <button
+
         onClick={handleAddToCart}
+
         className="
-          mt-12
-          w-full
-          rounded-full
-          bg-red-600
-          py-5
-          text-lg
-          font-black
-          uppercase
-          tracking-[0.3em]
-          transition
-          hover:bg-red-700
+        w-full
+        rounded-full
+        bg-red-600
+        py-5
+        text-sm
+        font-black
+        uppercase
+        tracking-[0.3em]
+        transition
+        hover:bg-red-700
         "
+
       >
-        ADD TO CART
+
+        Add To Cart
+
       </button>
 
 
+
     </div>
+
   );
+
 }
