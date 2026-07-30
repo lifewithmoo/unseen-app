@@ -16,7 +16,15 @@ export default function AddToCartButton({ product }: Props) {
   const { addToCart } = useCart();
 
   function handleAdd() {
-    addToCart(product);
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      size: product.size,
+      quantity: 1,
+    });
+
     alert("Added to cart ✓");
   }
 
