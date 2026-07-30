@@ -1,80 +1,111 @@
+import Link from "next/link";
+
+
 export default function SuccessPage() {
+
+
   return (
-    <main className="
-      min-h-screen
-      bg-black
-      flex
-      items-center
-      justify-center
-      px-6
-      text-white
-    ">
 
-      <div className="
-        text-center
-        rounded-3xl
-        bg-zinc-900
-        p-10
-        max-w-xl
-      ">
-
-        <div className="
-          mx-auto
-          flex
-          h-20
-          w-20
-          items-center
-          justify-center
-          rounded-full
-          bg-red-600
-          text-4xl
-          font-black
-        ">
-          ✓
-        </div>
+    <main
+      className="
+        flex
+        min-h-screen
+        items-center
+        justify-center
+        bg-black
+        px-5
+        text-white
+      "
+    >
 
 
-        <h1 className="
-          mt-8
-          text-5xl
-          font-black
-          tracking-widest
-        ">
-          THANK YOU
-        </h1>
+      <div
+        className="
+          text-center
+        "
+      >
 
 
-        <p className="
-          mt-6
-          text-gray-400
-          leading-8
-        ">
-          Your order has been placed successfully.
-          <br />
-          Welcome to UNSEEN.
+
+        <p
+          className="
+            text-sm
+            uppercase
+            tracking-[0.5em]
+            text-red-500
+          "
+        >
+          UNSEEN
         </p>
 
 
-        <a
-          href="/"
+
+
+        <h1
+          className="
+            mt-6
+            text-5xl
+            font-black
+            uppercase
+            md:text-7xl
+          "
+        >
+          Order
+          <br />
+          Confirmed
+        </h1>
+
+
+
+
+
+        <p
+          className="
+            mx-auto
+            mt-6
+            max-w-md
+            text-zinc-400
+            leading-7
+          "
+        >
+          Thank you for your order.
+          We received your request and we will contact you soon.
+        </p>
+
+
+
+
+
+
+
+        <Link
+          href="/shop"
           className="
             mt-10
             inline-block
             rounded-full
             bg-red-600
             px-10
-            py-4
-            font-bold
+            py-5
+            text-sm
+            font-black
+            uppercase
+            tracking-widest
             transition
             hover:bg-red-700
           "
         >
-          BACK HOME
-        </a>
+          Continue Shopping
+        </Link>
+
 
 
       </div>
 
+
+
     </main>
+
   );
+
 }

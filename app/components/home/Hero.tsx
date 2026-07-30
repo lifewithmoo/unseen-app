@@ -1,74 +1,264 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+
 
 export default function Hero() {
-  return (
-    <section className="relative h-screen overflow-hidden">
 
-      {/* Background */}
+
+  return (
+
+    <section
+      className="
+        relative
+        flex
+        min-h-screen
+        items-center
+        justify-center
+        overflow-hidden
+        bg-black
+        px-5
+        pt-28
+        pb-20
+        text-white
+        md:px-8
+        md:pt-32
+      "
+    >
+
+
+
+      {/* Background Image */}
+
       <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/hero-bg.jpg')",
-        }}
+        className="
+          absolute
+          inset-0
+          pointer-events-none
+          bg-[url('/hero-bg.jpg')]
+          bg-cover
+          bg-center
+        "
       />
 
+
+
+
+
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+
+      <div
+        className="
+          absolute
+          inset-0
+          pointer-events-none
+          bg-black/70
+        "
+      />
+
+
+
+
 
       {/* Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
+
+      <div
+        className="
+          absolute
+          inset-0
+          pointer-events-none
+          bg-gradient-to-t
+          from-black
+          via-black/40
+          to-transparent
+        "
+      />
+
+
+
+
+
+
+
 
       {/* Content */}
-      <div className="relative z-10 flex h-full items-center">
 
-        <motion.div
-          initial={{ opacity: 0, x: -80 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-2xl px-8 md:px-20"
+
+      <div
+        className="
+          relative
+          z-10
+          pointer-events-auto
+          mx-auto
+          max-w-6xl
+          text-center
+        "
+      >
+
+
+
+
+        <p
+          className="
+            animate-pulse
+            text-xs
+            uppercase
+            tracking-[0.6em]
+            text-red-500
+            md:text-sm
+          "
+        >
+          NEW DROP 2026
+        </p>
+
+
+
+
+
+
+
+        <h1
+          className="
+            mt-6
+            text-6xl
+            font-black
+            uppercase
+            leading-[0.85]
+            tracking-tight
+            sm:text-7xl
+            md:text-9xl
+          "
         >
 
-          <p className="mb-5 uppercase tracking-[0.6em] text-red-500">
-            DROP 01
-          </p>
+          UNSEEN
 
-          <h1 className="text-6xl font-black uppercase leading-none text-white md:text-8xl">
-            STAND
-            <br />
-            APART
-          </h1>
+          <br />
 
-          <div className="mt-10 space-y-3 text-lg text-gray-300">
-            <p>Premium streetwear.</p>
-            <p>Designed to be different.</p>
-            <p>Made to be remembered.</p>
-          </div>
+          <span className="text-zinc-400">
+            STREETWEAR
+          </span>
+
+
+        </h1>
+
+
+
+
+
+
+
+
+        <p
+          className="
+            mx-auto
+            mt-8
+            max-w-xl
+            text-sm
+            leading-7
+            text-zinc-300
+            md:text-base
+          "
+        >
+
+          Premium heavyweight pieces.
+          <br />
+          Limited releases.
+          <br />
+          Built for those who stand apart.
+
+        </p>
+
+
+
+
+
+
+
+
+
+        <div
+          className="
+            mt-10
+            flex
+            flex-col
+            gap-4
+            sm:flex-row
+            sm:justify-center
+          "
+        >
+
+
+
+
 
           <Link
             href="/shop"
-            className="mt-12 inline-flex items-center gap-4 rounded-full bg-red-600 px-10 py-5 text-lg font-bold uppercase tracking-[0.2em] text-white shadow-[0_0_40px_rgba(220,38,38,0.45)] transition-all duration-300 hover:scale-105 hover:bg-red-700"
+            className="
+              rounded-full
+              bg-red-600
+              px-10
+              py-5
+              text-sm
+              font-black
+              uppercase
+              tracking-[0.25em]
+              transition
+              hover:scale-105
+              hover:bg-red-700
+            "
           >
-            SHOP DROP 01
-            <span className="text-2xl">→</span>
+            Shop All
           </Link>
 
-          <div className="mt-24 flex items-center gap-3">
-            <div className="h-14 w-px bg-red-600" />
-            <span className="text-xs uppercase tracking-[0.5em] text-white">
-              Scroll
-            </span>
-          </div>
 
-        </motion.div>
+
+
+
+
+
+          <Link
+            href="/shop"
+            className="
+              rounded-full
+              border
+              border-white/30
+              px-10
+              py-5
+              text-sm
+              font-black
+              uppercase
+              tracking-[0.25em]
+              transition
+              hover:bg-white
+              hover:text-black
+            "
+          >
+            View Collection
+          </Link>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
 
       </div>
 
-      {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 h-40 w-full bg-gradient-to-t from-black to-transparent" />
+
+
+
+
+
 
     </section>
+
+
   );
+
 }

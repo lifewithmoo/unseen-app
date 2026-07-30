@@ -1,38 +1,76 @@
 "use client";
 
-interface SizeSelectorProps {
-  selectedSize: string;
-  setSelectedSize: React.Dispatch<React.SetStateAction<string>>;
-}
+type SizeSelectorProps = {
+  size: string;
+  setSize: (size: string) => void;
+};
+
 
 export default function SizeSelector({
-  selectedSize,
-  setSelectedSize,
+  size,
+  setSize,
 }: SizeSelectorProps) {
-  const sizes = ["S", "M", "L", "XL"];
+
+
+  const sizes = [
+    "S",
+    "M",
+    "L",
+    "XL",
+  ];
+
+
 
   return (
-    <div className="mt-12">
-      <p className="mb-5 text-sm uppercase tracking-[0.3em]">
-        Size
-      </p>
 
-      <div className="flex gap-3">
-        {sizes.map((size) => (
-          <button
-            key={size}
-            type="button"
-            onClick={() => setSelectedSize(size)}
-            className={`h-14 w-14 rounded-full border transition ${
-              selectedSize === size
+    <div
+      className="
+        flex
+        gap-3
+      "
+    >
+
+      {sizes.map((item) => (
+
+        <button
+
+          key={item}
+
+          type="button"
+
+          onClick={() => setSize(item)}
+
+          className={`
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+            rounded-full
+            border
+            text-sm
+            font-black
+            transition
+
+            ${
+              size === item
                 ? "border-red-600 bg-red-600 text-white"
-                : "border-white/20 text-white hover:border-red-600"
-            }`}
-          >
-            {size}
-          </button>
-        ))}
-      </div>
+                : "border-white/20 text-white hover:border-white"
+            }
+
+          `}
+
+        >
+
+          {item}
+
+        </button>
+
+      ))}
+
+
     </div>
+
   );
+
 }

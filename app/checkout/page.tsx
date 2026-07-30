@@ -1,77 +1,222 @@
 "use client";
 
-import { useCart } from "../context/CartContext";
+import { useState } from "react";
+import { useCart } from "@/app/context/CartContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+
+
 export default function CheckoutPage() {
+
+
   const { cart, clearCart } = useCart();
+
   const router = useRouter();
 
-  const total = cart.reduce((sum, item) => {
-    return (
+
+
+  const [customer, setCustomer] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
+
+
+
+
+
+  const total = cart.reduce(
+    (sum, item) =>
       sum +
       Number(item.price.replace("$", "")) *
-        item.quantity
-    );
-  }, 0);
+        item.quantity,
+    0
+  );
+
+
+
+
+
+
 
 
   const handleOrder = () => {
+
+
+    const message = `
+🔥 New UNSEEN Order
+
+
+CUSTOMER DETAILS
+
+Name: ${customer.name}
+Email: ${customer.email}
+Phone: ${customer.phone}
+Address: ${customer.address}
+
+
+
+ORDER DETAILS
+
+${cart
+  .map(
+    (item) => `
+Product: ${item.name}
+Size: ${item.size}
+Quantity: ${item.quantity}
+Price: ${item.price}
+`
+  )
+  .join("\n")}
+
+
+
+TOTAL: $${total}
+
+
+Thank you.
+`;
+
+
+
+
+
+    const whatsappUrl =
+      `https://wa.me/201111288950?text=${encodeURIComponent(message)}`;
+
+
+
+
+    window.open(
+      whatsappUrl,
+      "_blank"
+    );
+
+
+
+
     clearCart();
+
+
     router.push("/success");
+
+
   };
 
 
+
+
+
+
+
+
   return (
-    <main className="min-h-screen bg-black px-6 pb-20 pt-36 text-white">
+
+    <main
+      className="
+        min-h-screen
+        bg-black
+        px-6
+        pb-20
+        pt-36
+        text-white
+      "
+    >
+
+
 
       <Link
         href="/cart"
-        className="text-gray-400 transition hover:text-white"
+        className="
+          text-gray-400
+          transition
+          hover:text-white
+        "
       >
         ← Back To Cart
       </Link>
 
 
-      <h1 className="
-        mt-10
-        text-5xl
-        font-black
-        tracking-widest
-      ">
+
+
+
+      <h1
+        className="
+          mt-10
+          text-5xl
+          font-black
+          tracking-widest
+        "
+      >
         CHECKOUT
       </h1>
 
 
-      <div className="
-        mt-12
-        grid
-        gap-10
-        md:grid-cols-2
-      ">
+
+
+
+
+
+
+      <div
+        className="
+          mt-12
+          grid
+          gap-10
+          md:grid-cols-2
+        "
+      >
+
+
+
+
+
+
 
 
         {/* Customer Details */}
 
-        <div className="
-          rounded-3xl
-          bg-zinc-900
-          p-8
-        ">
 
-          <h2 className="
-            text-2xl
-            font-black
-          ">
+
+        <div
+          className="
+            rounded-3xl
+            bg-zinc-900
+            p-8
+          "
+        >
+
+
+
+          <h2
+            className="
+              text-2xl
+              font-black
+            "
+          >
             CUSTOMER DETAILS
           </h2>
 
 
+
+
+
+
           <div className="mt-8 space-y-5">
+
+
 
             <input
               placeholder="Full Name"
+              value={customer.name}
+              onChange={(e) =>
+                setCustomer({
+                  ...customer,
+                  name: e.target.value,
+                })
+              }
               className="
                 w-full
                 rounded-xl
@@ -80,10 +225,20 @@ export default function CheckoutPage() {
                 outline-none
               "
             />
+
+
+
 
 
             <input
               placeholder="Email"
+              value={customer.email}
+              onChange={(e) =>
+                setCustomer({
+                  ...customer,
+                  email: e.target.value,
+                })
+              }
               className="
                 w-full
                 rounded-xl
@@ -92,10 +247,20 @@ export default function CheckoutPage() {
                 outline-none
               "
             />
+
+
+
 
 
             <input
               placeholder="Phone"
+              value={customer.phone}
+              onChange={(e) =>
+                setCustomer({
+                  ...customer,
+                  phone: e.target.value,
+                })
+              }
               className="
                 w-full
                 rounded-xl
@@ -106,8 +271,20 @@ export default function CheckoutPage() {
             />
 
 
+
+
+
+
+
             <textarea
               placeholder="Address"
+              value={customer.address}
+              onChange={(e) =>
+                setCustomer({
+                  ...customer,
+                  address: e.target.value,
+                })
+              }
               className="
                 h-32
                 w-full
@@ -118,40 +295,70 @@ export default function CheckoutPage() {
               "
             />
 
+
+
+
           </div>
+
+
 
         </div>
 
 
 
+
+
+
+
+
+
         {/* Order Summary */}
 
-        <div className="
-          rounded-3xl
-          bg-zinc-900
-          p-8
-        ">
 
-          <h2 className="
-            text-2xl
-            font-black
-          ">
+
+        <div
+          className="
+            rounded-3xl
+            bg-zinc-900
+            p-8
+          "
+        >
+
+
+
+          <h2
+            className="
+              text-2xl
+              font-black
+            "
+          >
             ORDER SUMMARY
           </h2>
 
 
+
+
+
+
           <div className="mt-8 space-y-5">
 
+
+
             {cart.length === 0 ? (
+
               <p className="text-gray-400">
                 Your cart is empty.
               </p>
+
+
             ) : (
+
 
               cart.map((item) => (
 
+
                 <div
-                  key={item.id}
+                  key={`${item.id}-${item.size}`}
                   className="
                     flex
                     justify-between
@@ -159,9 +366,11 @@ export default function CheckoutPage() {
                   "
                 >
 
+
                   <span>
                     {item.name} x {item.quantity}
                   </span>
+
 
 
                   <span>
@@ -170,45 +379,77 @@ export default function CheckoutPage() {
                       item.quantity}
                   </span>
 
+
+
                 </div>
 
+
               ))
+
 
             )}
 
 
-            <div className="
-              border-t
-              border-white/10
-              pt-5
-            ">
 
-              <div className="
-                flex
-                items-center
-                justify-between
-              ">
 
-                <span className="
-                  text-xl
-                  font-bold
-                ">
+
+
+
+            <div
+              className="
+                border-t
+                border-white/10
+                pt-5
+              "
+            >
+
+
+
+              <div
+                className="
+                  flex
+                  items-center
+                  justify-between
+                "
+              >
+
+
+
+                <span
+                  className="
+                    text-xl
+                    font-bold
+                  "
+                >
                   Total
                 </span>
 
 
-                <span className="
-                  text-3xl
-                  font-black
-                  text-red-500
-                ">
+
+
+                <span
+                  className="
+                    text-3xl
+                    font-black
+                    text-red-500
+                  "
+                >
                   ${total}
                 </span>
+
+
 
               </div>
 
 
+
             </div>
+
+
+
+
+
+
 
 
             <button
@@ -232,14 +473,29 @@ export default function CheckoutPage() {
             </button>
 
 
+
+
+
           </div>
 
+
+
+
         </div>
+
+
+
+
 
 
       </div>
 
 
+
+
     </main>
+
+
   );
+
 }

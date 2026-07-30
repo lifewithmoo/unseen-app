@@ -1,148 +1,455 @@
 "use client";
 
+import Link from "next/link";
 import { useCart } from "@/app/context/CartContext";
 
+
+
 export default function CartPage() {
+
+
 
   const {
     cart,
     removeFromCart,
-    total,
+    clearCart,
+    increaseQuantity,
+    decreaseQuantity,
   } = useCart();
 
 
+
+
+
+  const total = cart.reduce(
+    (sum, item) =>
+      sum +
+      Number(item.price.replace("$", "")) *
+        item.quantity,
+    0
+  );
+
+
+
+
+
+
   return (
-    <main className="min-h-screen bg-black pt-32 text-white">
-
-      <div className="mx-auto max-w-6xl px-6">
-
-        <h1 className="text-6xl font-black uppercase">
-          Your Cart
-        </h1>
 
 
-        {cart.length === 0 ? (
+    <main
+      className="
+        min-h-screen
+        bg-black
+        px-5
+        pb-20
+        pt-36
+        text-white
+        md:px-8
+      "
+    >
 
-          <p className="mt-10 text-zinc-400">
+
+
+
+      <h1
+        className="
+          text-5xl
+          font-black
+          tracking-widest
+        "
+      >
+        YOUR CART
+      </h1>
+
+
+
+
+
+
+
+      {cart.length === 0 ? (
+
+
+        <div
+          className="
+            mt-16
+            text-center
+          "
+        >
+
+          <p className="text-zinc-400">
             Your cart is empty.
           </p>
 
-        ) : (
 
-          <div className="mt-12">
+          <Link
+            href="/shop"
+            className="
+              mt-8
+              inline-block
+              rounded-full
+              bg-red-600
+              px-10
+              py-4
+              font-black
+              uppercase
+              tracking-widest
+            "
+          >
+            Continue Shopping
+          </Link>
 
-            <div className="space-y-6">
 
-              {cart.map((item, index) => (
+        </div>
 
-                <div
-                  key={index}
+
+
+      ) : (
+
+
+
+
+        <div
+          className="
+            mt-12
+            grid
+            gap-10
+            lg:grid-cols-3
+          "
+        >
+
+
+
+
+
+
+          {/* Items */}
+
+
+
+          <div
+            className="
+              space-y-6
+              lg:col-span-2
+            "
+          >
+
+
+
+
+            {cart.map((item) => (
+
+
+              <div
+                key={`${item.id}-${item.size}`}
+                className="
+                  flex
+                  gap-5
+                  rounded-3xl
+                  bg-zinc-900
+                  p-5
+                "
+              >
+
+
+
+                <img
+                  src={item.image}
+                  alt={item.name}
                   className="
-                    flex
-                    items-center
-                    justify-between
-                    rounded-3xl
-                    border
-                    border-white/10
-                    p-6
+                    h-32
+                    w-28
+                    rounded-2xl
+                    object-cover
                   "
-                >
+                />
 
-                  <div className="flex items-center gap-6">
 
-                    <img
-                      src={item.image}
-                      alt={item.name}
+
+
+
+
+                <div className="flex-1">
+
+
+
+                  <h2
+                    className="
+                      text-lg
+                      font-black
+                      uppercase
+                    "
+                  >
+                    {item.name}
+                  </h2>
+
+
+
+                  <p className="mt-2 text-zinc-400">
+                    Size: {item.size}
+                  </p>
+
+
+
+                  <p className="mt-2 text-red-500 font-bold">
+                    {item.price}
+                  </p>
+
+
+
+
+
+
+
+                  {/* Quantity */}
+
+
+                  <div
+                    className="
+                      mt-5
+                      flex
+                      items-center
+                      gap-4
+                    "
+                  >
+
+
+
+                    <button
+                      onClick={() =>
+                        decreaseQuantity(
+                          item.id,
+                          item.size
+                        )
+                      }
                       className="
-                        h-32
-                        w-32
-                        rounded-2xl
-                        object-cover
+                        flex
+                        h-8
+                        w-8
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-white/20
+                        hover:bg-white
+                        hover:text-black
                       "
-                    />
+                    >
+                      -
+                    </button>
 
 
-                    <div>
-
-                      <h2 className="text-2xl font-black uppercase">
-                        {item.name}
-                      </h2>
 
 
-                      <p className="mt-2 text-red-500 font-bold">
-                        {item.price}
-                      </p>
+
+                    <span
+                      className="
+                        font-black
+                      "
+                    >
+                      {item.quantity}
+                    </span>
 
 
-                      <p className="mt-2 text-zinc-400">
-                        Size: {item.size}
-                      </p>
 
-                    </div>
+
+
+                    <button
+                      onClick={() =>
+                        increaseQuantity(
+                          item.id,
+                          item.size
+                        )
+                      }
+                      className="
+                        flex
+                        h-8
+                        w-8
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-white/20
+                        hover:bg-white
+                        hover:text-black
+                      "
+                    >
+                      +
+                    </button>
+
+
 
                   </div>
 
 
+
+
+
+
+
                   <button
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() =>
+                      removeFromCart(item.id)
+                    }
                     className="
-                      rounded-full
-                      border
-                      border-red-600
-                      px-5
-                      py-3
+                      mt-5
                       text-sm
                       uppercase
-                      text-red-500
-                      transition
-                      hover:bg-red-600
-                      hover:text-white
+                      text-zinc-400
+                      hover:text-red-500
                     "
                   >
                     Remove
                   </button>
 
 
+
+
                 </div>
 
-              ))}
-
-            </div>
 
 
-            <div className="mt-12 border-t border-white/10 pt-8">
-
-              <p className="text-3xl font-black uppercase">
-                Total: ${total}
-              </p>
+              </div>
 
 
-              <button
-                className="
-                  mt-8
-                  w-full
-                  rounded-full
-                  bg-red-600
-                  py-5
-                  font-black
-                  uppercase
-                  tracking-[0.3em]
-                  transition
-                  hover:bg-red-700
-                "
-              >
-                Checkout
-              </button>
 
-            </div>
+            ))}
+
 
 
           </div>
 
-        )}
 
-      </div>
+
+
+
+
+
+
+
+          {/* Summary */}
+
+
+
+
+          <div
+            className="
+              h-fit
+              rounded-3xl
+              bg-zinc-900
+              p-8
+            "
+          >
+
+
+
+            <h2
+              className="
+                text-2xl
+                font-black
+              "
+            >
+              SUMMARY
+            </h2>
+
+
+
+
+
+            <div
+              className="
+                mt-8
+                flex
+                justify-between
+                text-xl
+              "
+            >
+
+
+              <span>
+                Total
+              </span>
+
+
+              <span
+                className="
+                  font-black
+                  text-red-500
+                "
+              >
+                ${total}
+              </span>
+
+
+
+            </div>
+
+
+
+
+
+
+            <Link
+              href="/checkout"
+              className="
+                mt-8
+                block
+                w-full
+                rounded-full
+                bg-red-600
+                py-5
+                text-center
+                font-black
+                uppercase
+                tracking-widest
+              "
+            >
+              CHECKOUT
+            </Link>
+
+
+
+
+
+            <button
+              onClick={clearCart}
+              className="
+                mt-5
+                w-full
+                rounded-full
+                border
+                border-white/20
+                py-4
+                text-sm
+                font-bold
+                uppercase
+                tracking-widest
+                text-zinc-400
+              "
+            >
+              CLEAR CART
+            </button>
+
+
+
+          </div>
+
+
+
+
+
+        </div>
+
+
+
+      )}
+
+
 
     </main>
+
+
   );
+
 }

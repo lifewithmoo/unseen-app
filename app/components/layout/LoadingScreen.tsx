@@ -1,50 +1,100 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+
 export default function LoadingScreen() {
+
+
   const [loading, setLoading] = useState(true);
 
+
+
   useEffect(() => {
+
     const timer = setTimeout(() => {
+
       setLoading(false);
-    }, 1500);
+
+    }, 1200);
+
+
 
     return () => clearTimeout(timer);
+
+
   }, []);
+
+
+
+
 
   if (!loading) return null;
 
+
+
+
   return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 0 }}
-      transition={{ duration: 0.8, delay: 0.8 }}
+
+    <div
       className="
         fixed
         inset-0
         z-[100]
+        pointer-events-none
         flex
         items-center
         justify-center
         bg-black
-        text-white
       "
     >
-      <motion.h1
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8 }}
+
+
+
+      <div
         className="
-          text-6xl
-          font-black
-          tracking-[0.4em]
-          md:text-9xl
+          text-center
         "
       >
-        UNSEEN
-      </motion.h1>
-    </motion.div>
+
+
+
+        <h1
+          className="
+            animate-pulse
+            text-5xl
+            font-black
+            tracking-[0.5em]
+            text-white
+            md:text-7xl
+          "
+        >
+          UNSEEN
+        </h1>
+
+
+
+
+        <p
+          className="
+            mt-5
+            text-xs
+            uppercase
+            tracking-[0.5em]
+            text-red-500
+          "
+        >
+          Premium Streetwear
+        </p>
+
+
+
+      </div>
+
+
+
+    </div>
+
   );
+
 }

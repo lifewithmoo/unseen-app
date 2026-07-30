@@ -19,17 +19,21 @@ type CartItem = {
 };
 
 
+
 type CartContextType = {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
+  increaseQuantity: (id: string, size: string) => void;
+  decreaseQuantity: (id: string, size: string) => void;
   total: number;
 };
 
 
 
 const CartContext = createContext<CartContextType | null>(null);
+
 
 
 
@@ -41,7 +45,10 @@ export function CartProvider({
 }) {
 
 
+
   const [cart, setCart] = useState<CartItem[]>([]);
+
+
 
 
 
@@ -56,7 +63,29 @@ export function CartProvider({
 
     }
 
+
   }, []);
+
+
+
+
+
+
+
+  function updateCart(updatedCart: CartItem[]) {
+
+    setCart(updatedCart);
+
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(updatedCart)
+    );
+
+  }
+
+
+
+
 
 
 
@@ -112,17 +141,84 @@ export function CartProvider({
 
 
 
-    setCart(updatedCart);
-
-
-
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
+    updateCart(updatedCart);
 
 
   }
+
+
+
+
+
+
+
+
+
+  function increaseQuantity(
+    id: string,
+    size: string
+  ) {
+
+
+    const updatedCart = cart.map((item) =>
+
+      item.id === id &&
+      item.size === size
+
+        ? {
+            ...item,
+            quantity: item.quantity + 1,
+          }
+
+        : item
+
+    );
+
+
+    updateCart(updatedCart);
+
+  }
+
+
+
+
+
+
+
+
+
+  function decreaseQuantity(
+    id: string,
+    size: string
+  ) {
+
+
+    const updatedCart = cart
+      .map((item) =>
+
+        item.id === id &&
+        item.size === size
+
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+            }
+
+          : item
+
+      )
+      .filter(
+        (item) => item.quantity > 0
+      );
+
+
+
+    updateCart(updatedCart);
+
+  }
+
+
+
 
 
 
@@ -137,18 +233,12 @@ export function CartProvider({
     );
 
 
-
-    setCart(updatedCart);
-
-
-
-    localStorage.setItem(
-      "cart",
-      JSON.stringify(updatedCart)
-    );
+    updateCart(updatedCart);
 
 
   }
+
+
 
 
 
@@ -162,11 +252,11 @@ export function CartProvider({
     setCart([]);
 
 
-
     localStorage.removeItem("cart");
 
 
   }
+
 
 
 
@@ -204,6 +294,8 @@ export function CartProvider({
         addToCart,
         removeFromCart,
         clearCart,
+        increaseQuantity,
+        decreaseQuantity,
         total,
       }}
 
