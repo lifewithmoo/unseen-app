@@ -6,13 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function CheckoutPage() {
-
-
   const { cart, clearCart } = useCart();
-
   const router = useRouter();
-
-
 
   const [customer, setCustomer] = useState({
     name: "",
@@ -21,62 +16,45 @@ export default function CheckoutPage() {
     address: "",
   });
 
-
-
-
   const total = cart.reduce(
     (sum, item) =>
       sum +
-      Number(item.price.replace("$", "")) *
+      Number(item.price.replace(" EGP", "")) *
         item.quantity,
     0
   );
 
-
-
-
-
-
   const handleOrder = () => {
-
-
-
     if (
       !customer.name ||
       !customer.email ||
       !customer.phone ||
       !customer.address
     ) {
-
       alert("Please complete your information first");
-
       return;
-
     }
 
-
-
-
-
     const message = `
-🔥 New UNSEEN Order
+🔥 NEW UNSEEN ORDER
 
+━━━━━━━━━━━━━━━━━━
 
-CUSTOMER DETAILS
+👤 CUSTOMER DETAILS
 
 Name: ${customer.name}
 Email: ${customer.email}
 Phone: ${customer.phone}
 Address: ${customer.address}
 
+━━━━━━━━━━━━━━━━━━
 
-
-ORDER DETAILS
+🛍️ ORDER DETAILS
 
 ${cart
   .map(
     (item) => `
-Product: ${item.name}
+• ${item.name}
 Size: ${item.size}
 Quantity: ${item.quantity}
 Price: ${item.price}
@@ -84,49 +62,25 @@ Price: ${item.price}
   )
   .join("\n")}
 
+━━━━━━━━━━━━━━━━━━
 
+💰 TOTAL: ${total} EGP
 
-TOTAL: $${total}
-
-
-Thank you.
+Thank you for shopping with UNSEEN.
 `;
 
+    const whatsappUrl = `https://wa.me/201111288950?text=${encodeURIComponent(
+      message
+    )}`;
 
-
-
-
-    const whatsappUrl =
-      `https://wa.me/201111288950?text=${encodeURIComponent(message)}`;
-
-
-
-    window.open(
-      whatsappUrl,
-      "_blank"
-    );
-
-
+    window.open(whatsappUrl, "_blank");
 
     clearCart();
 
-
-
     router.push("/success");
-
-
   };
 
-
-
-
-
-
-
-
-
   return (
-
     <main
       className="
         min-h-screen
@@ -137,8 +91,6 @@ Thank you.
         text-white
       "
     >
-
-
       <Link
         href="/cart"
         className="
@@ -149,10 +101,6 @@ Thank you.
       >
         ← Back To Cart
       </Link>
-
-
-
-
 
       <h1
         className="
@@ -165,11 +113,6 @@ Thank you.
         CHECKOUT
       </h1>
 
-
-
-
-
-
       <div
         className="
           mt-12
@@ -178,8 +121,7 @@ Thank you.
           md:grid-cols-2
         "
       >
-
-
+        {/* Customer */}
 
         <div
           className="
@@ -188,24 +130,11 @@ Thank you.
             p-8
           "
         >
-
-
-          <h2
-            className="
-              text-2xl
-              font-black
-            "
-          >
+          <h2 className="text-2xl font-black">
             CUSTOMER DETAILS
           </h2>
 
-
-
-
-
           <div className="mt-8 space-y-5">
-
-
             <input
               placeholder="Full Name"
               value={customer.name}
@@ -215,16 +144,8 @@ Thank you.
                   name: e.target.value,
                 })
               }
-              className="
-                w-full
-                rounded-xl
-                bg-black
-                p-4
-                outline-none
-              "
+              className="w-full rounded-xl bg-black p-4 outline-none"
             />
-
-
 
             <input
               placeholder="Email"
@@ -235,16 +156,8 @@ Thank you.
                   email: e.target.value,
                 })
               }
-              className="
-                w-full
-                rounded-xl
-                bg-black
-                p-4
-                outline-none
-              "
+              className="w-full rounded-xl bg-black p-4 outline-none"
             />
-
-
 
             <input
               placeholder="Phone"
@@ -255,16 +168,8 @@ Thank you.
                   phone: e.target.value,
                 })
               }
-              className="
-                w-full
-                rounded-xl
-                bg-black
-                p-4
-                outline-none
-              "
+              className="w-full rounded-xl bg-black p-4 outline-none"
             />
-
-
 
             <textarea
               placeholder="Address"
@@ -275,30 +180,12 @@ Thank you.
                   address: e.target.value,
                 })
               }
-              className="
-                h-32
-                w-full
-                rounded-xl
-                bg-black
-                p-4
-                outline-none
-              "
+              className="h-32 w-full rounded-xl bg-black p-4 outline-none"
             />
-
-
-
           </div>
-
-
-
         </div>
 
-
-
-
-
-
-
+        {/* Summary */}
 
         <div
           className="
@@ -307,112 +194,46 @@ Thank you.
             p-8
           "
         >
-
-
-          <h2
-            className="
-              text-2xl
-              font-black
-            "
-          >
+          <h2 className="text-2xl font-black">
             ORDER SUMMARY
           </h2>
 
-
-
-
-
           <div className="mt-8 space-y-5">
-
-
             {cart.length === 0 ? (
-
               <p className="text-gray-400">
                 Your cart is empty.
               </p>
-
             ) : (
-
               cart.map((item) => (
-
                 <div
                   key={`${item.id}-${item.size}`}
-                  className="
-                    flex
-                    justify-between
-                    text-sm
-                  "
+                  className="flex justify-between text-sm"
                 >
-
                   <span>
-                    {item.name} x {item.quantity}
+                    {item.name} × {item.quantity}
                   </span>
 
-
                   <span>
-                    $
-                    {Number(item.price.replace("$", "")) *
-                      item.quantity}
+                    {Number(
+                      item.price.replace(" EGP", "")
+                    ) * item.quantity}{" "}
+                    EGP
                   </span>
-
-
                 </div>
-
               ))
-
             )}
 
-
-
-
-
-
-            <div
-              className="
-                border-t
-                border-white/10
-                pt-5
-              "
-            >
-
-              <div
-                className="
-                  flex
-                  items-center
-                  justify-between
-                "
-              >
-
-                <span
-                  className="
-                    text-xl
-                    font-bold
-                  "
-                >
+            <div className="border-t border-white/10 pt-5">
+              <div className="flex items-center justify-between">
+                <span className="text-xl font-bold">
                   Total
                 </span>
 
-
-                <span
-                  className="
-                    text-3xl
-                    font-black
-                    text-red-500
-                  "
-                >
-                  ${total}
+                <span className="text-3xl font-black text-red-500">
+                  {total} EGP
                 </span>
-
-
               </div>
-
-
             </div>
-
-
-
-
-
 
             <button
               onClick={handleOrder}
@@ -433,23 +254,9 @@ Thank you.
             >
               PLACE ORDER
             </button>
-
-
-
           </div>
-
-
-
         </div>
-
-
-
       </div>
-
-
-
     </main>
-
   );
-
 }

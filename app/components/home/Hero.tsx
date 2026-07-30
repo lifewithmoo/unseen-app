@@ -3,9 +3,7 @@
 import Link from "next/link";
 
 export default function Hero() {
-
   return (
-
     <section
       className="
         relative
@@ -16,129 +14,95 @@ export default function Hero() {
         overflow-hidden
         bg-black
         px-5
-        pt-28
-        pb-20
+       pt-40
+pb-20
+md:pt-48
         text-white
         md:px-8
         md:pt-32
       "
     >
-
-
       {/* Background */}
-
-      <div
-        className="
-          absolute
-          inset-0
-          pointer-events-none
-          bg-[url('/hero-bg.jpg')]
-          bg-cover
-          bg-center
-          scale-105
-          animate-pulse
-        "
-      />
-
-
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <img
+          src="/hero-new.jpg"
+          alt="UNSEEN"
+          className="
+            hero-bg
+            h-full
+            w-full
+            object-cover
+            object-center
+          "
+        />
+      </div>
 
       {/* Overlay */}
-
-      <div
-        className="
-          absolute
-          inset-0
-          pointer-events-none
-          bg-black/75
-        "
-      />
-
-
+      <div className="absolute inset-0 bg-black/60" />
 
       {/* Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-      <div
-        className="
-          absolute
-          inset-0
-          pointer-events-none
-          bg-gradient-to-t
-          from-black
-          via-black/40
-          to-transparent
-        "
-      />
-
-
-
-
+      {/* Light Effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent blur-3xl" />
 
       {/* Content */}
-
       <div
         className="
-          relative
-          z-10
-          mx-auto
-          max-w-6xl
-          text-center
+          hero-content
+relative
+z-10
+mx-auto
+mt-8
+max-w-5xl
+text-center
+md:mt-12
         "
       >
-
-
-
-        <div
+        <p
           className="
-            mx-auto
-            mb-6
-            inline-flex
-            rounded-full
-            border
-            border-red-500/40
-            bg-red-500/10
-            px-5
-            py-2
-            text-[10px]
-            font-black
+            mb-4
+            text-xs
             uppercase
-            tracking-[0.5em]
+            tracking-[0.7em]
             text-red-500
+            animate-pulse
           "
         >
-          Limited Drop 2026
-        </div>
-
-
-
-
+          NEW DROP 2026
+        </p>
 
         <h1
           className="
-            animate-[fadeIn_1s_ease-out]
-            text-6xl
+            hero-title
+            text-5xl
             font-black
             uppercase
-            leading-[0.85]
+            leading-[0.9]
             tracking-tight
-            sm:text-7xl
-            md:text-9xl
+            sm:text-6xl
+            md:text-8xl
           "
         >
-
           UNSEEN
 
           <br />
 
-          <span className="text-zinc-400">
+          <span
+            className="
+              block
+              mt-2
+              text-3xl
+              font-bold
+              tracking-[0.35em]
+              text-zinc-300
+              sm:text-4xl
+              md:text-5xl
+            "
+          >
             STREETWEAR
           </span>
-
-
         </h1>
-
-
-
-
 
         <p
           className="
@@ -146,40 +110,24 @@ export default function Hero() {
             mt-8
             max-w-xl
             text-sm
-            leading-7
+            leading-8
             text-zinc-300
             md:text-base
           "
         >
-
           Premium heavyweight pieces.
           <br />
-          Limited releases.
-          <br />
-          Built for those who stand apart.
-
+          Limited releases crafted for people
+          who move different.
         </p>
 
-
-
-
-
-        <div
-          className="
-            mt-10
-            flex
-            flex-col
-            gap-4
-            sm:flex-row
-            sm:justify-center
-          "
-        >
-
-
-
+        <div className="mt-12">
           <Link
             href="/shop"
             className="
+              inline-flex
+              items-center
+              justify-center
               rounded-full
               bg-red-600
               px-12
@@ -188,85 +136,43 @@ export default function Hero() {
               font-black
               uppercase
               tracking-[0.3em]
-              transition
+              transition-all
               duration-300
               hover:scale-105
               hover:bg-red-700
+              hover:shadow-[0_0_40px_rgba(220,38,38,.6)]
             "
           >
-            Shop All
+            SHOP NOW
           </Link>
+        </div>
 
-
-
-
-          <Link
-            href="/shop"
+        {/* Scroll Indicator */}
+        <div className="mt-16 flex justify-center">
+          <div
             className="
+              flex
+              h-12
+              w-7
+              justify-center
               rounded-full
               border
               border-white/30
-              px-12
-              py-5
-              text-sm
-              font-black
-              uppercase
-              tracking-[0.3em]
-              transition
-              duration-300
-              hover:bg-white
-              hover:text-black
             "
           >
-            Collection
-          </Link>
-
-
-
+            <div
+              className="
+                mt-2
+                h-3
+                w-1
+                animate-bounce
+                rounded-full
+                bg-white
+              "
+            />
+          </div>
         </div>
-
-
-
-
-
-        {/* Scroll */}
-
-        <div
-          className="
-            mt-16
-            flex
-            flex-col
-            items-center
-            gap-3
-            text-[10px]
-            uppercase
-            tracking-[0.5em]
-            text-zinc-500
-          "
-        >
-
-          Scroll
-
-          <div
-            className="
-              h-10
-              w-px
-              bg-white/30
-            "
-          />
-
-        </div>
-
-
-
-
       </div>
-
-
-
-
     </section>
-
   );
-
 }

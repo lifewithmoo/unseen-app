@@ -9,6 +9,7 @@ type Product = {
   price: string;
   image: string;
   hoverImage: string;
+  description?: string;
 };
 
 
@@ -18,6 +19,7 @@ export default function ProductCard({
 }: {
   product: Product;
 }) {
+
 
 
   return (
@@ -33,145 +35,113 @@ export default function ProductCard({
 
 
 
-      {/* Image */}
-
 
       <div
         className="
-          relative
           overflow-hidden
           rounded-3xl
-          bg-zinc-900
+          border
+          border-white/10
+          bg-gradient-to-b
+          from-zinc-900
+          to-black
+          p-3
+          transition
+          duration-500
+          hover:border-white/30
         "
       >
 
 
 
-        <img
 
-          src={product.image}
+        {/* Image */}
 
-          alt={product.name}
 
+        <div
           className="
-            h-[420px]
-            w-full
-            object-cover
-            transition
-            duration-700
-            group-hover:scale-105
-            md:h-[520px]
-          "
-
-        />
-
-
-
-
-
-        {/* Hover Image */}
-
-
-        <img
-
-          src={product.hoverImage}
-
-          alt={product.name}
-
-          className="
-            absolute
-            inset-0
-            h-full
-            w-full
-            object-cover
-            opacity-0
-            transition
-            duration-700
-            group-hover:opacity-100
-          "
-
-        />
-
-
-
-
-
-
-        {/* Badge */}
-
-
-        <span
-          className="
-            absolute
-            left-5
-            top-5
-            rounded-full
-            bg-red-600
-            px-4
-            py-2
-            text-[10px]
-            font-black
-            uppercase
-            tracking-widest
+            relative
+            overflow-hidden
+            rounded-2xl
+            bg-zinc-900
           "
         >
-          New Drop
-        </span>
 
 
 
+          <img
 
-      </div>
+            src={product.image}
 
+            alt={product.name}
 
-
-
-
-
-
-      {/* Info */}
-
-
-
-      <div
-        className="
-          mt-5
-          flex
-          items-start
-          justify-between
-          gap-4
-        "
-      >
-
-
-
-        <div>
-
-
-          <h3
             className="
-              text-sm
+              h-[430px]
+              w-full
+              object-cover
+              transition
+              duration-700
+              group-hover:scale-105
+              md:h-[520px]
+            "
+
+          />
+
+
+
+
+
+
+          {/* Hover Image */}
+
+
+          <img
+
+            src={product.hoverImage}
+
+            alt={product.name}
+
+            className="
+              absolute
+              inset-0
+              h-full
+              w-full
+              object-cover
+              opacity-0
+              transition
+              duration-700
+              group-hover:opacity-100
+            "
+
+          />
+
+
+
+
+
+
+
+          {/* Badge */}
+
+
+          <span
+            className="
+              absolute
+              left-4
+              top-4
+              rounded-full
+              bg-red-600
+              px-4
+              py-2
+              text-[10px]
               font-black
               uppercase
-              tracking-wide
-              text-white
-              md:text-base
+              tracking-widest
             "
           >
-            {product.name}
-          </h3>
+            New Drop
+          </span>
 
-
-
-          <p
-            className="
-              mt-2
-              text-sm
-              text-zinc-400
-            "
-          >
-            Premium Fit
-          </p>
 
 
 
@@ -181,20 +151,122 @@ export default function ProductCard({
 
 
 
-        <p
+
+
+        {/* Info */}
+
+
+
+        <div
           className="
-            text-lg
-            font-black
-            text-red-500
+            px-2
+            pb-3
+            pt-5
           "
         >
-          {product.price}
-        </p>
+
+
+
+
+          <div
+            className="
+              flex
+              items-start
+              justify-between
+              gap-3
+            "
+          >
+
+
+
+            <h3
+              className="
+                text-sm
+                font-black
+                uppercase
+                tracking-wide
+                text-white
+                md:text-base
+              "
+            >
+              {product.name}
+            </h3>
+
+
+
+
+
+            <p
+              className="
+                text-lg
+                font-black
+                text-red-500
+              "
+            >
+              {product.price}
+            </p>
+
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <p
+            className="
+              mt-3
+              line-clamp-2
+              text-xs
+              leading-6
+              text-zinc-400
+            "
+          >
+            {product.description ||
+              "Premium heavyweight streetwear piece designed for those who move different."
+            }
+          </p>
+
+
+
+
+
+
+
+          <div
+            className="
+              mt-5
+              rounded-full
+              border
+              border-white/20
+              py-3
+              text-center
+              text-[10px]
+              font-black
+              uppercase
+              tracking-[0.3em]
+              transition
+              group-hover:bg-white
+              group-hover:text-black
+            "
+          >
+            View Piece
+          </div>
+
+
+
+
+
+        </div>
+
 
 
 
       </div>
-
 
 
 

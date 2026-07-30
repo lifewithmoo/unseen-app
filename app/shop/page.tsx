@@ -10,7 +10,9 @@ export default function ShopPage() {
 
     <main
       className="
+        relative
         min-h-screen
+        overflow-hidden
         bg-black
         pb-24
         pt-36
@@ -19,15 +21,32 @@ export default function ShopPage() {
     >
 
 
+      {/* Background */}
 
       <div
         className="
+          pointer-events-none
+          absolute
+          inset-0
+          bg-gradient-to-b
+          from-zinc-900
+          via-black
+          to-black
+        "
+      />
+
+
+
+      <div
+        className="
+          relative
           mx-auto
           max-w-7xl
           px-5
           md:px-8
         "
       >
+
 
 
 
@@ -49,12 +68,13 @@ export default function ShopPage() {
             className="
               text-xs
               uppercase
-              tracking-[0.6em]
+              tracking-[0.7em]
               text-red-500
             "
           >
             UNSEEN COLLECTION
           </p>
+
 
 
 
@@ -66,14 +86,19 @@ export default function ShopPage() {
               text-6xl
               font-black
               uppercase
-              leading-none
+              leading-[0.85]
+              tracking-tight
               md:text-8xl
             "
           >
-            Shop
+
+            THE
             <br />
-            All
+            DROP
+
           </h1>
+
+
 
 
 
@@ -82,24 +107,25 @@ export default function ShopPage() {
           <p
             className="
               mx-auto
-              mt-6
+              mt-7
               max-w-lg
               text-sm
-              leading-7
+              leading-8
               text-zinc-400
               md:text-base
             "
           >
+
             Premium heavyweight streetwear.
-            Limited drops.
-            Designed for those who move different.
+            <br />
+            Limited pieces created for those
+            who never blend in.
+
           </p>
 
 
 
-
         </div>
-
 
 
 
@@ -114,10 +140,13 @@ export default function ShopPage() {
 
         <div
           className="
-            mt-12
+            mt-14
             flex
-            justify-center
-            gap-4
+            gap-3
+            overflow-x-auto
+            pb-2
+            scrollbar-hide
+            md:justify-center
           "
         >
 
@@ -125,9 +154,10 @@ export default function ShopPage() {
 
           <button
             className="
+              whitespace-nowrap
               rounded-full
               bg-white
-              px-6
+              px-7
               py-3
               text-xs
               font-black
@@ -142,20 +172,20 @@ export default function ShopPage() {
 
 
 
+
           <button
             className="
+              whitespace-nowrap
               rounded-full
               border
               border-white/20
-              px-6
+              px-7
               py-3
               text-xs
               font-black
               uppercase
               tracking-widest
               text-zinc-400
-              transition
-              hover:text-white
             "
           >
             Tees
@@ -164,20 +194,20 @@ export default function ShopPage() {
 
 
 
+
           <button
             className="
+              whitespace-nowrap
               rounded-full
               border
               border-white/20
-              px-6
+              px-7
               py-3
               text-xs
               font-black
               uppercase
               tracking-widest
               text-zinc-400
-              transition
-              hover:text-white
             "
           >
             Hoodies
@@ -195,13 +225,32 @@ export default function ShopPage() {
 
 
 
+        {/* Divider */}
+
+
+
+        <div
+          className="
+            my-14
+            h-px
+            bg-white/10
+          "
+        />
+
+
+
+
+
+
+
+
+
         {/* Products */}
 
 
 
         <div
           className="
-            mt-16
             grid
             gap-8
             sm:grid-cols-2
@@ -215,8 +264,11 @@ export default function ShopPage() {
 
 
             <ProductCard
+
               key={product.id}
+
               product={product}
+
             />
 
 
@@ -225,6 +277,7 @@ export default function ShopPage() {
 
 
         </div>
+
 
 
 

@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/app/context/CartContext";
 
-
-
 export default function CartPage() {
-
-
-
   const {
     cart,
     removeFromCart,
@@ -17,26 +12,14 @@ export default function CartPage() {
     decreaseQuantity,
   } = useCart();
 
-
-
-
-
   const total = cart.reduce(
     (sum, item) =>
       sum +
-      Number(item.price.replace("$", "")) *
-        item.quantity,
+      Number(item.price.replace(" EGP", "")) * item.quantity,
     0
   );
 
-
-
-
-
-
   return (
-
-
     <main
       className="
         min-h-screen
@@ -48,10 +31,6 @@ export default function CartPage() {
         md:px-8
       "
     >
-
-
-
-
       <h1
         className="
           text-5xl
@@ -62,26 +41,16 @@ export default function CartPage() {
         YOUR CART
       </h1>
 
-
-
-
-
-
-
       {cart.length === 0 ? (
-
-
         <div
           className="
             mt-16
             text-center
           "
         >
-
           <p className="text-zinc-400">
             Your cart is empty.
           </p>
-
 
           <Link
             href="/shop"
@@ -99,17 +68,8 @@ export default function CartPage() {
           >
             Continue Shopping
           </Link>
-
-
         </div>
-
-
-
       ) : (
-
-
-
-
         <div
           className="
             mt-12
@@ -118,15 +78,7 @@ export default function CartPage() {
             lg:grid-cols-3
           "
         >
-
-
-
-
-
-
           {/* Items */}
-
-
 
           <div
             className="
@@ -134,13 +86,7 @@ export default function CartPage() {
               lg:col-span-2
             "
           >
-
-
-
-
             {cart.map((item) => (
-
-
               <div
                 key={`${item.id}-${item.size}`}
                 className="
@@ -151,9 +97,6 @@ export default function CartPage() {
                   p-5
                 "
               >
-
-
-
                 <img
                   src={item.image}
                   alt={item.name}
@@ -165,15 +108,7 @@ export default function CartPage() {
                   "
                 />
 
-
-
-
-
-
                 <div className="flex-1">
-
-
-
                   <h2
                     className="
                       text-lg
@@ -184,26 +119,13 @@ export default function CartPage() {
                     {item.name}
                   </h2>
 
-
-
                   <p className="mt-2 text-zinc-400">
                     Size: {item.size}
                   </p>
 
-
-
-                  <p className="mt-2 text-red-500 font-bold">
+                  <p className="mt-2 font-bold text-red-500">
                     {item.price}
                   </p>
-
-
-
-
-
-
-
-                  {/* Quantity */}
-
 
                   <div
                     className="
@@ -213,15 +135,9 @@ export default function CartPage() {
                       gap-4
                     "
                   >
-
-
-
                     <button
                       onClick={() =>
-                        decreaseQuantity(
-                          item.id,
-                          item.size
-                        )
+                        decreaseQuantity(item.id, item.size)
                       }
                       className="
                         flex
@@ -239,28 +155,13 @@ export default function CartPage() {
                       -
                     </button>
 
-
-
-
-
-                    <span
-                      className="
-                        font-black
-                      "
-                    >
+                    <span className="font-black">
                       {item.quantity}
                     </span>
 
-
-
-
-
                     <button
                       onClick={() =>
-                        increaseQuantity(
-                          item.id,
-                          item.size
-                        )
+                        increaseQuantity(item.id, item.size)
                       }
                       className="
                         flex
@@ -277,21 +178,10 @@ export default function CartPage() {
                     >
                       +
                     </button>
-
-
-
                   </div>
 
-
-
-
-
-
-
                   <button
-                    onClick={() =>
-                      removeFromCart(item.id)
-                    }
+                    onClick={() => removeFromCart(item.id)}
                     className="
                       mt-5
                       text-sm
@@ -302,36 +192,12 @@ export default function CartPage() {
                   >
                     Remove
                   </button>
-
-
-
-
                 </div>
-
-
-
               </div>
-
-
-
             ))}
-
-
-
           </div>
 
-
-
-
-
-
-
-
-
           {/* Summary */}
-
-
-
 
           <div
             className="
@@ -341,9 +207,6 @@ export default function CartPage() {
               p-8
             "
           >
-
-
-
             <h2
               className="
                 text-2xl
@@ -353,10 +216,6 @@ export default function CartPage() {
               SUMMARY
             </h2>
 
-
-
-
-
             <div
               className="
                 mt-8
@@ -365,12 +224,7 @@ export default function CartPage() {
                 text-xl
               "
             >
-
-
-              <span>
-                Total
-              </span>
-
+              <span>Total</span>
 
               <span
                 className="
@@ -378,17 +232,9 @@ export default function CartPage() {
                   text-red-500
                 "
               >
-                ${total}
+                {total} EGP
               </span>
-
-
-
             </div>
-
-
-
-
-
 
             <Link
               href="/checkout"
@@ -408,10 +254,6 @@ export default function CartPage() {
               CHECKOUT
             </Link>
 
-
-
-
-
             <button
               onClick={clearCart}
               className="
@@ -430,26 +272,9 @@ export default function CartPage() {
             >
               CLEAR CART
             </button>
-
-
-
           </div>
-
-
-
-
-
         </div>
-
-
-
       )}
-
-
-
     </main>
-
-
   );
-
 }

@@ -4,18 +4,11 @@ import Link from "next/link";
 import { useCart } from "@/app/context/CartContext";
 import { useState } from "react";
 
-
 export default function Navbar() {
-
-
   const { cart } = useCart();
-
   const [open, setOpen] = useState(false);
 
-
-
   return (
-
     <nav
       className="
         fixed
@@ -28,8 +21,6 @@ export default function Navbar() {
         backdrop-blur-xl
       "
     >
-
-
       <div
         className="
           mx-auto
@@ -42,33 +33,21 @@ export default function Navbar() {
           md:px-8
         "
       >
-
-
-
-
         {/* Logo */}
-
 
         <Link
           href="/"
-          onClick={() => setOpen(false)}
           className="
-            text-xl
+            text-2xl
             font-black
             tracking-[0.45em]
             text-white
-            md:text-2xl
           "
         >
           UNSEEN
         </Link>
 
-
-
-
-
-        {/* Desktop */}
-
+        {/* Desktop Menu */}
 
         <div
           className="
@@ -78,8 +57,6 @@ export default function Navbar() {
             md:flex
           "
         >
-
-
           <Link
             href="/"
             className="
@@ -94,8 +71,6 @@ export default function Navbar() {
             Home
           </Link>
 
-
-
           <Link
             href="/shop"
             className="
@@ -107,30 +82,40 @@ export default function Navbar() {
               hover:text-white
             "
           >
-            Shop
+            Shop All
           </Link>
-
-
-
 
           <Link
             href="/cart"
             className="
               relative
-              text-xl
+              mt-1
+              flex
+              items-center
+              justify-center
             "
           >
-
-            🛒
-
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-7 w-7 text-white transition hover:text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 3h2l2 12h10l2-8H7M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
+              />
+            </svg>
 
             {cart.length > 0 && (
-
               <span
                 className="
                   absolute
-                  -right-3
-                  -top-3
+                  -right-2
+                  -top-1
                   flex
                   h-5
                   w-5
@@ -140,57 +125,49 @@ export default function Navbar() {
                   bg-red-600
                   text-[10px]
                   font-black
+                  text-white
                 "
               >
                 {cart.length}
               </span>
-
             )}
-
-
           </Link>
-
-
         </div>
-
-
-
-
-
-
 
         {/* Mobile */}
 
-
-        <div
-          className="
-            flex
-            items-center
-            gap-5
-            md:hidden
-          "
-        >
-
-
-
+        <div className="flex items-center gap-5 md:hidden">
           <Link
             href="/cart"
             className="
               relative
-              text-xl
+              mt-1
+              flex
+              items-center
+              justify-center
             "
           >
-
-            🛒
-
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-7 w-7 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 3h2l2 12h10l2-8H7M9 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
+              />
+            </svg>
 
             {cart.length > 0 && (
-
               <span
                 className="
                   absolute
-                  -right-3
-                  -top-3
+                  -right-2
+                  -top-1
                   flex
                   h-5
                   w-5
@@ -200,18 +177,13 @@ export default function Navbar() {
                   bg-red-600
                   text-[10px]
                   font-black
+                  text-white
                 "
               >
                 {cart.length}
               </span>
-
             )}
-
           </Link>
-
-
-
-
 
           <button
             onClick={() => setOpen(!open)}
@@ -220,144 +192,52 @@ export default function Navbar() {
               text-white
             "
           >
-
-            {open ? "✕" : "☰"}
-
+            ☰
           </button>
-
-
-
         </div>
-
-
-
       </div>
 
+      {/* Mobile Menu */}
 
-
-
-
-
-
-
-      {/* Mobile Full Menu */}
-
-
-
-      <div
-        className={`
-          fixed
-          left-0
-          top-[73px]
-          h-[calc(100vh-73px)]
-          w-full
-          bg-black
-          px-8
-          py-10
-          transition-all
-          duration-300
-          md:hidden
-
-          ${
-            open
-              ? "translate-x-0 opacity-100"
-              : "pointer-events-none -translate-x-full opacity-0"
-          }
-
-        `}
-      >
-
-
-
+      {open && (
         <div
           className="
-            flex
-            flex-col
-            gap-8
+            border-t
+            border-white/10
+            bg-black/95
+            px-5
+            py-6
+            backdrop-blur-xl
+            md:hidden
           "
         >
+          <div className="flex flex-col gap-6">
+            <Link
+              href="/"
+              onClick={() => setOpen(false)}
+              className="
+                text-sm
+                uppercase
+                tracking-widest
+              "
+            >
+              Home
+            </Link>
 
-
-
-          <Link
-            href="/"
-            onClick={() => setOpen(false)}
-            className="
-              text-3xl
-              font-black
-              uppercase
-              tracking-widest
-            "
-          >
-            Home
-          </Link>
-
-
-
-
-          <Link
-            href="/shop"
-            onClick={() => setOpen(false)}
-            className="
-              text-3xl
-              font-black
-              uppercase
-              tracking-widest
-            "
-          >
-            Shop
-          </Link>
-
-
-
-
-
-          <Link
-            href="/cart"
-            onClick={() => setOpen(false)}
-            className="
-              text-3xl
-              font-black
-              uppercase
-              tracking-widest
-            "
-          >
-            Cart
-          </Link>
-
-
-
-
-
+            <Link
+              href="/shop"
+              onClick={() => setOpen(false)}
+              className="
+                text-sm
+                uppercase
+                tracking-widest
+              "
+            >
+              Shop All
+            </Link>
+          </div>
         </div>
-
-
-
-
-        <div
-          className="
-            absolute
-            bottom-10
-            left-8
-            text-xs
-            uppercase
-            tracking-[0.5em]
-            text-zinc-500
-          "
-        >
-          UNSEEN © 2026
-
-        </div>
-
-
-
-
-      </div>
-
-
-
+      )}
     </nav>
-
   );
-
 }

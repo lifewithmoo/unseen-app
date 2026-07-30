@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useCart } from "@/app/context/CartContext";
 import SizeSelector from "@/app/components/SizeSelector";
-import { useState } from "react";
-
+import CartPopup from "@/app/components/CartPopup";
 
 
 type Product = {
@@ -12,8 +12,8 @@ type Product = {
   price: string;
   image: string;
   hoverImage: string;
+  description?: string;
 };
-
 
 
 
@@ -24,7 +24,6 @@ export default function ProductDetails({
 }) {
 
 
-
   const { addToCart } = useCart();
 
 
@@ -32,7 +31,7 @@ export default function ProductDetails({
 
   const [quantity, setQuantity] = useState(1);
 
-
+  const [showPopup, setShowPopup] = useState(false);
 
 
 
@@ -41,19 +40,15 @@ export default function ProductDetails({
 
 
     addToCart({
-
       ...product,
-
       size,
-
       quantity,
-
     });
 
 
+    setShowPopup(true);
+
   }
-
-
 
 
 
@@ -62,15 +57,12 @@ export default function ProductDetails({
   return (
 
 
-
     <div
       className="
         w-full
         max-w-xl
       "
     >
-
-
 
 
 
@@ -84,7 +76,6 @@ export default function ProductDetails({
       >
         UNSEEN DROP
       </p>
-
 
 
 
@@ -107,8 +98,6 @@ export default function ProductDetails({
 
 
 
-
-
       <p
         className="
           mt-6
@@ -123,9 +112,6 @@ export default function ProductDetails({
 
 
 
-
-
-
       <p
         className="
           mt-6
@@ -135,13 +121,10 @@ export default function ProductDetails({
           md:text-base
         "
       >
-        Premium heavyweight streetwear piece.
-        Oversized fit.
-        Limited production.
-        Made for everyday movement.
+        {product.description ||
+          "Premium heavyweight streetwear piece. Oversized fit. Limited production. Made for everyday movement."
+        }
       </p>
-
-
 
 
 
@@ -176,10 +159,7 @@ export default function ProductDetails({
         />
 
 
-
       </div>
-
-
 
 
 
@@ -220,6 +200,7 @@ export default function ProductDetails({
 
 
 
+
         <div
           className="
             flex
@@ -227,7 +208,6 @@ export default function ProductDetails({
             gap-5
           "
         >
-
 
 
           <button
@@ -247,17 +227,9 @@ export default function ProductDetails({
 
 
 
-
-
-          <span
-            className="
-              font-black
-            "
-          >
+          <span className="font-black">
             {quantity}
           </span>
-
-
 
 
 
@@ -275,9 +247,7 @@ export default function ProductDetails({
           </button>
 
 
-
         </div>
-
 
 
       </div>
@@ -288,16 +258,12 @@ export default function ProductDetails({
 
 
 
-
-
-      {/* Add Button */}
+      {/* Add Cart */}
 
 
 
       <button
-
         onClick={handleAdd}
-
         className="
           mt-8
           w-full
@@ -312,14 +278,9 @@ export default function ProductDetails({
           hover:scale-[1.02]
           hover:bg-red-700
         "
-
       >
-
         Add To Cart
-
       </button>
-
-
 
 
 
@@ -341,27 +302,31 @@ export default function ProductDetails({
         "
       >
 
-
         <p>
           ✓ Premium heavyweight fabric
         </p>
-
 
         <p>
           ✓ Oversized streetwear fit
         </p>
 
-
         <p>
           ✓ Limited UNSEEN release
         </p>
-
-
 
       </div>
 
 
 
+
+
+      {/* Popup */}
+
+
+      <CartPopup
+        show={showPopup}
+        setShow={setShowPopup}
+      />
 
 
     </div>

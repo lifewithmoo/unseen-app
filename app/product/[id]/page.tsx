@@ -6,7 +6,6 @@ import ProductDetails from "@/app/components/ProductDetails";
 import ProductGallery from "@/app/components/ProductGallery";
 
 
-
 type Props = {
   params: Promise<{
     id: string;
@@ -15,15 +14,12 @@ type Props = {
 
 
 
-
 export default async function ProductPage({
   params,
 }: Props) {
 
 
-
   const { id } = await params;
-
 
 
   const product = products.find(
@@ -31,12 +27,9 @@ export default async function ProductPage({
   );
 
 
-
   if (!product) {
     notFound();
   }
-
-
 
 
 
@@ -48,13 +41,12 @@ export default async function ProductPage({
         bg-black
         px-4
         pb-20
-        pt-28
+        pt-36
         text-white
         md:px-6
-        md:pt-36
+        md:pt-48
       "
     >
-
 
 
       <div
@@ -62,6 +54,7 @@ export default async function ProductPage({
           mx-auto
           grid
           max-w-7xl
+          items-start
           gap-8
           lg:grid-cols-2
           lg:gap-16
@@ -71,6 +64,7 @@ export default async function ProductPage({
 
 
         {/* Product Images */}
+
 
         <ProductGallery
           product={{
@@ -84,7 +78,9 @@ export default async function ProductPage({
 
 
 
+
         {/* Product Info */}
+
 
         <ProductDetails
           product={product}
