@@ -1,89 +1,73 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import Button from "../ui/Button";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-6 text-white">
+    <section className="relative h-screen overflow-hidden">
 
       {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/80 to-black" />
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/hero-bg.jpg')",
+        }}
+      />
 
-        <img
-          src="/hero.jpg"
-          alt="UNSEEN collection"
-          className="h-full w-full object-cover"
-        />
-      </div>
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60" />
+
+      {/* Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
 
       {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="relative z-10 flex flex-col items-center text-center"
-      >
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mb-10 text-xs uppercase tracking-[0.8em] text-red-500 md:text-sm"
-        >
-          Summer Collection 2026
-        </motion.p>
-
-
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1 }}
-          className="
-            text-7xl
-            font-black
-            tracking-[0.35em]
-            md:text-[11rem]
-          "
-        >
-          UNSEEN
-        </motion.h1>
-
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="
-            mt-10
-            max-w-xl
-            text-sm
-            uppercase
-            leading-loose
-            tracking-[0.35em]
-            text-zinc-400
-            md:text-lg
-          "
-        >
-          Not Made To Be Seen.
-          <br />
-          Made To Be Remembered.
-        </motion.p>
-
+      <div className="relative z-10 flex h-full items-center">
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="mt-14"
+          initial={{ opacity: 0, x: -80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl px-8 md:px-20"
         >
-          <Button>
-            SHOP NOW
-          </Button>
+
+          <p className="mb-5 uppercase tracking-[0.6em] text-red-500">
+            DROP 01
+          </p>
+
+          <h1 className="text-6xl font-black uppercase leading-none text-white md:text-8xl">
+            STAND
+            <br />
+            APART
+          </h1>
+
+          <div className="mt-10 space-y-3 text-lg text-gray-300">
+            <p>Premium streetwear.</p>
+            <p>Designed to be different.</p>
+            <p>Made to be remembered.</p>
+          </div>
+
+          <Link
+            href="/shop"
+            className="mt-12 inline-flex items-center gap-4 rounded-full bg-red-600 px-10 py-5 text-lg font-bold uppercase tracking-[0.2em] text-white shadow-[0_0_40px_rgba(220,38,38,0.45)] transition-all duration-300 hover:scale-105 hover:bg-red-700"
+          >
+            SHOP DROP 01
+            <span className="text-2xl">→</span>
+          </Link>
+
+          <div className="mt-24 flex items-center gap-3">
+            <div className="h-14 w-px bg-red-600" />
+            <span className="text-xs uppercase tracking-[0.5em] text-white">
+              Scroll
+            </span>
+          </div>
+
         </motion.div>
 
-      </motion.div>
+      </div>
+
+      {/* Bottom Fade */}
+      <div className="absolute bottom-0 left-0 h-40 w-full bg-gradient-to-t from-black to-transparent" />
 
     </section>
   );

@@ -1,31 +1,43 @@
 "use client";
 
-import { useCart } from "../context/CartContext";
-import toast from "react-hot-toast";
+import { useCart } from "@/app/context/CartContext";
 
-type AddToCartButtonProps = {
+type Props = {
   product: {
     id: string;
     name: string;
     price: string;
     image: string;
+    size: string;
   };
 };
 
-export default function AddToCartButton({
-  product,
-}: AddToCartButtonProps) {
+export default function AddToCartButton({ product }: Props) {
   const { addToCart } = useCart();
+
+  function handleAdd() {
+    addToCart(product);
+    alert("Added to cart ✓");
+  }
 
   return (
     <button
-      onClick={() => {
-        addToCart(product);
-        toast.success("Added to cart!");
-      }}
-      className="mt-10 rounded-full bg-red-600 py-4 font-bold transition hover:bg-red-700"
+      onClick={handleAdd}
+      className="
+        mt-12
+        w-full
+        rounded-full
+        bg-red-600
+        py-5
+        text-lg
+        font-black
+        uppercase
+        tracking-[0.3em]
+        transition
+        hover:bg-red-700
+      "
     >
-      Add To Cart
+      ADD TO CART
     </button>
   );
 }

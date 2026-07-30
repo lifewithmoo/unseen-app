@@ -1,93 +1,99 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { useCart } from "../context/CartContext";
-import toast from "react-hot-toast";
 
-type ProductCardProps = {
+type Product = {
   id: string;
   name: string;
   price: string;
   image: string;
+  hoverImage: string;
 };
 
-export default function ProductCard({
-  id,
-  name,
-  price,
-  image,
-}: ProductCardProps) {
-  const { addToCart } = useCart();
 
-  const product = {
-    id,
-    name,
-    price,
-    image,
-  };
+type Props = {
+  product?: Product;
+};
+
+
+export default function ProductCard({ product }: Props) {
+
+  if (!product) {
+    return null;
+  }
+
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="group overflow-hidden rounded-3xl bg-zinc-900"
-    >
+    <Link href={`/product/${product.id}`}>
 
-      <Link href={`/product/${id}`}>
-        <div className="overflow-hidden">
+      <div className="group cursor-pointer">
+
+
+        <div
+          className="
+            relative
+            overflow-hidden
+            rounded-3xl
+          "
+        >
+
           <img
-            src={image}
-            alt={name}
+            src={product.image}
+            alt={product.name}
             className="
-              h-[420px]
+              h-[550px]
               w-full
               object-cover
               transition
               duration-700
-              group-hover:scale-110
+              group-hover:scale-105
             "
           />
+
+
+          <img
+            src={product.hoverImage}
+            alt=""
+            className="
+              absolute
+              inset-0
+              h-full
+              w-full
+              object-cover
+              opacity-0
+              transition
+              duration-700
+              group-hover:opacity-100
+            "
+          />
+
+
         </div>
-      </Link>
 
 
-      <div className="p-6">
 
-        <h2 className="text-xl font-black tracking-wide">
-          {name}
-        </h2>
+        <div className="mt-6">
 
-        <p className="mt-3 font-bold text-red-500">
-          {price}
-        </p>
+          <h2
+            className="
+              text-xl
+              font-black
+              uppercase
+              tracking-wide
+            "
+          >
+            {product.name}
+          </h2>
 
 
-        <button
-          onClick={() => {
-            addToCart(product);
-            toast.success("Added to cart!");
-          }}
-          className="
-            mt-6
-            w-full
-            rounded-full
-            border
-            border-white/20
-            py-3
-            font-bold
-            transition
-            hover:bg-white
-            hover:text-black
-          "
-        >
-          ADD TO CART
-        </button>
+          <p className="mt-3 text-red-500 font-bold">
+            {product.price}
+          </p>
+
+
+        </div>
+
 
       </div>
 
-    </motion.div>
+    </Link>
   );
 }
