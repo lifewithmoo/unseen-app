@@ -9,6 +9,7 @@ import {
 } from "react";
 
 
+
 type CartItem = {
   id: string;
   name: string;
@@ -20,19 +21,30 @@ type CartItem = {
 
 
 
+
 type CartContextType = {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
-  increaseQuantity: (id: string, size: string) => void;
-  decreaseQuantity: (id: string, size: string) => void;
+  increaseQuantity: (
+    id: string,
+    size: string
+  ) => void;
+  decreaseQuantity: (
+    id: string,
+    size: string
+  ) => void;
   total: number;
 };
 
 
 
-const CartContext = createContext<CartContextType | null>(null);
+
+const CartContext =
+  createContext<CartContextType | null>(null);
+
+
 
 
 
@@ -46,22 +58,57 @@ export function CartProvider({
 
 
 
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] =
+    useState<CartItem[]>([]);
+
+
+
+  const [loaded, setLoaded] =
+    useState(false);
 
 
 
 
+
+
+
+  // Load Cart
 
   useEffect(() => {
 
-    const savedCart = localStorage.getItem("cart");
+
+    const savedCart =
+      localStorage.getItem("cart");
+
 
 
     if (savedCart) {
 
-      setCart(JSON.parse(savedCart));
+
+      try {
+
+
+        setCart(
+          JSON.parse(savedCart)
+        );
+
+
+      } catch {
+
+
+        localStorage.removeItem(
+          "cart"
+        );
+
+
+      }
+
 
     }
+
+
+
+    setLoaded(true);
 
 
   }, []);
@@ -72,54 +119,73 @@ export function CartProvider({
 
 
 
-  function updateCart(updatedCart: CartItem[]) {
+  // Save Cart
 
-    setCart(updatedCart);
+
+
+  useEffect(() => {
+
+
+    if (!loaded) return;
+
+
 
     localStorage.setItem(
       "cart",
-      JSON.stringify(updatedCart)
-    );
-
-  }
-
-
-
-
-
-
-
-
-
-  function addToCart(item: CartItem) {
-
-
-    const existingItem = cart.find(
-      (cartItem) =>
-        cartItem.id === item.id &&
-        cartItem.size === item.size
+      JSON.stringify(cart)
     );
 
 
+  }, [
+    cart,
+    loaded,
+  ]);
 
-    let updatedCart: CartItem[];
+
+
+
+
+
+
+
+
+  function addToCart(
+    item: CartItem
+  ) {
+
+
+
+    const existingItem =
+      cart.find(
+        (cartItem) =>
+          cartItem.id === item.id &&
+          cartItem.size === item.size
+      );
+
+
 
 
 
     if (existingItem) {
 
 
-      updatedCart = cart.map((cartItem) =>
 
-        cartItem.id === item.id &&
-        cartItem.size === item.size
+      setCart((prev) =>
 
-          ? {
-              ...cartItem,
-              quantity: cartItem.quantity + 1,
-            }
+        prev.map((cartItem) =>
 
-          : cartItem
+          cartItem.id === item.id &&
+          cartItem.size === item.size
+
+            ? {
+                ...cartItem,
+                quantity:
+                  cartItem.quantity + 1,
+              }
+
+            : cartItem
+
+        )
 
       );
 
@@ -128,20 +194,21 @@ export function CartProvider({
     } else {
 
 
-      updatedCart = [
-        ...cart,
+
+      setCart((prev) => [
+
+        ...prev,
+
         {
           ...item,
           quantity: 1,
         },
-      ];
+
+      ]);
+
 
 
     }
-
-
-
-    updateCart(updatedCart);
 
 
   }
@@ -160,22 +227,26 @@ export function CartProvider({
   ) {
 
 
-    const updatedCart = cart.map((item) =>
 
-      item.id === id &&
-      item.size === size
+    setCart((prev) =>
 
-        ? {
-            ...item,
-            quantity: item.quantity + 1,
-          }
+      prev.map((item) =>
 
-        : item
+        item.id === id &&
+        item.size === size
+
+          ? {
+              ...item,
+              quantity:
+                item.quantity + 1,
+            }
+
+          : item
+
+      )
 
     );
 
-
-    updateCart(updatedCart);
 
   }
 
@@ -193,27 +264,33 @@ export function CartProvider({
   ) {
 
 
-    const updatedCart = cart
-      .map((item) =>
 
-        item.id === id &&
-        item.size === size
+    setCart((prev) =>
 
-          ? {
-              ...item,
-              quantity: item.quantity - 1,
-            }
+      prev
 
-          : item
+        .map((item) =>
 
-      )
-      .filter(
-        (item) => item.quantity > 0
-      );
+          item.id === id &&
+          item.size === size
 
+            ? {
+                ...item,
+                quantity:
+                  item.quantity - 1,
+              }
 
+            : item
 
-    updateCart(updatedCart);
+        )
+
+        .filter(
+          (item) =>
+            item.quantity > 0
+        )
+
+    );
+
 
   }
 
@@ -225,15 +302,20 @@ export function CartProvider({
 
 
 
-  function removeFromCart(id: string) {
+  function removeFromCart(
+    id: string
+  ) {
 
 
-    const updatedCart = cart.filter(
-      (item) => item.id !== id
+
+    setCart((prev) =>
+
+      prev.filter(
+        (item) =>
+          item.id !== id
+      )
+
     );
-
-
-    updateCart(updatedCart);
 
 
   }
@@ -249,10 +331,12 @@ export function CartProvider({
   function clearCart() {
 
 
+
     setCart([]);
 
-
-    localStorage.removeItem("cart");
+    localStorage.removeItem(
+      "cart"
+    );
 
 
   }
@@ -271,13 +355,20 @@ export function CartProvider({
 
       sum +
 
-      Number(item.price.replace("$", "")) *
+      Number(
+        item.price.replace(
+          " EGP",
+          ""
+        )
+      ) *
 
       item.quantity,
+
 
     0
 
   );
+
 
 
 
@@ -305,6 +396,7 @@ export function CartProvider({
 
     </CartContext.Provider>
 
+
   );
 
 }
@@ -315,10 +407,13 @@ export function CartProvider({
 
 
 
+
+
 export function useCart() {
 
 
-  const context = useContext(CartContext);
+  const context =
+    useContext(CartContext);
 
 
 

@@ -1,11 +1,126 @@
+"use client";
+
+import { useState } from "react";
+
 import ProductCard from "@/app/components/ProductCard";
 import { products } from "@/app/data/products";
+
 
 
 export default function ShopPage() {
 
 
+
+  const [search, setSearch] =
+    useState("");
+
+  const [sort, setSort] =
+    useState("default");
+
+  const [category, setCategory] =
+    useState("All");
+
+
+
+
+
+
+
+
+  const filteredProducts =
+    products
+      .filter((product) => {
+
+
+
+        const matchesSearch =
+          product.name
+            .toLowerCase()
+            .includes(
+              search.toLowerCase()
+            );
+
+
+
+        const matchesCategory =
+          category === "All"
+            ? true
+            : product.category === category;
+
+
+
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
+
+
+
+      })
+
+
+
+
+
+      .sort((a, b) => {
+
+
+
+        const priceA =
+          Number(
+            a.price.replace(
+              " EGP",
+              ""
+            )
+          );
+
+
+        const priceB =
+          Number(
+            b.price.replace(
+              " EGP",
+              ""
+            )
+          );
+
+
+
+
+        if (sort === "low") {
+
+          return priceA - priceB;
+
+        }
+
+
+
+        if (sort === "high") {
+
+          return priceB - priceA;
+
+        }
+
+
+
+        return 0;
+
+
+
+      });
+
+
+
+
+
+
+
+
+
+
+
+
   return (
+
 
 
     <main
@@ -21,7 +136,8 @@ export default function ShopPage() {
     >
 
 
-      {/* Background */}
+
+
 
       <div
         className="
@@ -34,6 +150,11 @@ export default function ShopPage() {
           to-black
         "
       />
+
+
+
+
+
 
 
 
@@ -52,15 +173,14 @@ export default function ShopPage() {
 
 
 
-        {/* Header */}
-
-
 
         <div
           className="
             text-center
           "
         >
+
+
 
 
 
@@ -74,7 +194,6 @@ export default function ShopPage() {
           >
             UNSEEN COLLECTION
           </p>
-
 
 
 
@@ -97,8 +216,6 @@ export default function ShopPage() {
             DROP
 
           </h1>
-
-
 
 
 
@@ -134,7 +251,10 @@ export default function ShopPage() {
 
 
 
-        {/* Categories */}
+
+        {/* SEARCH + SORT */}
+
+
 
 
 
@@ -142,76 +262,93 @@ export default function ShopPage() {
           className="
             mt-14
             flex
-            gap-3
-            overflow-x-auto
-            pb-2
-            scrollbar-hide
-            md:justify-center
+            flex-col
+            gap-4
+            md:flex-row
+            md:items-center
+            md:justify-between
           "
         >
 
 
 
-          <button
+
+          <input
+
+            value={search}
+
+            onChange={(e) =>
+              setSearch(
+                e.target.value
+              )
+            }
+
+            placeholder="Search pieces..."
+
             className="
-              whitespace-nowrap
-              rounded-full
-              bg-white
-              px-7
-              py-3
-              text-xs
-              font-black
-              uppercase
-              tracking-widest
-              text-black
-            "
-          >
-            All
-          </button>
-
-
-
-
-
-          <button
-            className="
-              whitespace-nowrap
+              w-full
               rounded-full
               border
-              border-white/20
-              px-7
-              py-3
-              text-xs
-              font-black
-              uppercase
-              tracking-widest
-              text-zinc-400
+              border-white/10
+              bg-zinc-900
+              px-6
+              py-4
+              text-sm
+              text-white
+              outline-none
+              transition
+              focus:border-red-600
+              md:max-w-md
             "
-          >
-            Tees
-          </button>
+
+          />
 
 
 
 
 
-          <button
+
+          <select
+
+            value={sort}
+
+            onChange={(e) =>
+              setSort(
+                e.target.value
+              )
+            }
+
             className="
-              whitespace-nowrap
               rounded-full
               border
-              border-white/20
-              px-7
-              py-3
-              text-xs
-              font-black
-              uppercase
-              tracking-widest
-              text-zinc-400
+              border-white/10
+              bg-zinc-900
+              px-6
+              py-4
+              text-sm
+              font-bold
+              text-white
+              outline-none
             "
+
           >
-            Hoodies
-          </button>
+
+            <option value="default">
+              Sort By
+            </option>
+
+
+            <option value="low">
+              Price Low → High
+            </option>
+
+
+            <option value="high">
+              Price High → Low
+            </option>
+
+
+          </select>
 
 
 
@@ -225,7 +362,79 @@ export default function ShopPage() {
 
 
 
-        {/* Divider */}
+        {/* CATEGORIES */}
+
+
+
+
+
+        <div
+          className="
+            mt-10
+            flex
+            gap-3
+            overflow-x-auto
+            pb-2
+            md:justify-center
+          "
+        >
+
+
+
+          {[
+            "All",
+            "Tees",
+            "Hoodies",
+          ].map((item) => (
+
+
+
+            <button
+
+              key={item}
+
+              onClick={() =>
+                setCategory(item)
+              }
+
+              className={`
+                rounded-full
+                px-7
+                py-3
+                text-xs
+                font-black
+                uppercase
+                tracking-widest
+                transition
+
+                ${
+                  category === item
+                    ? "bg-white text-black"
+                    : "border border-white/20 text-white"
+                }
+
+              `}
+
+            >
+
+              {item}
+
+
+            </button>
+
+
+
+          ))}
+
+
+
+        </div>
+
+
+
+
+
+
 
 
 
@@ -245,38 +454,66 @@ export default function ShopPage() {
 
 
 
-        {/* Products */}
+        {/* PRODUCTS */}
 
 
 
-        <div
-          className="
-            grid
-            gap-8
-            sm:grid-cols-2
-            xl:grid-cols-3
-          "
-        >
+
+
+        {
+          filteredProducts.length === 0 ? (
 
 
 
-          {products.map((product) => (
-
-
-            <ProductCard
-
-              key={product.id}
-
-              product={product}
-
-            />
-
-
-          ))}
+            <p
+              className="
+                text-center
+                text-zinc-400
+              "
+            >
+              No pieces found.
+            </p>
 
 
 
-        </div>
+          ) : (
+
+
+
+            <div
+              className="
+                grid
+                gap-8
+                sm:grid-cols-2
+                xl:grid-cols-3
+              "
+            >
+
+
+
+
+              {filteredProducts.map(
+                (product) => (
+
+
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                  />
+
+
+                )
+              )}
+
+
+
+
+            </div>
+
+
+
+          )
+        }
 
 
 
@@ -284,6 +521,8 @@ export default function ShopPage() {
 
 
       </div>
+
+
 
 
 

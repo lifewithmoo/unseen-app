@@ -1,52 +1,108 @@
 "use client";
 
 import { useState } from "react";
+
 import { useCart } from "@/app/context/CartContext";
+
 import SizeSelector from "@/app/components/SizeSelector";
 import CartPopup from "@/app/components/CartPopup";
 
 
+
 type Product = {
+
   id: string;
   name: string;
   price: string;
   image: string;
   hoverImage: string;
   description?: string;
+
+  sizes?: {
+    S:number;
+    M:number;
+    L:number;
+    XL:number;
+  };
+
 };
 
 
 
+
+
 export default function ProductDetails({
+
   product,
-}: {
+
+}:{
   product: Product;
+
 }) {
+
 
 
   const { addToCart } = useCart();
 
 
-  const [size, setSize] = useState("M");
 
-  const [quantity, setQuantity] = useState(1);
-
-  const [showPopup, setShowPopup] = useState(false);
+  const [size,setSize] =
+    useState("M");
 
 
 
+  const [quantity,setQuantity] =
+    useState(1);
 
-  function handleAdd() {
+
+
+  const [showPopup,setShowPopup] =
+    useState(false);
+
+
+
+
+
+
+
+  const availableStock =
+    product.sizes?.[
+      size as keyof typeof product.sizes
+    ] || 0;
+
+
+
+
+
+
+
+
+  function handleAdd(){
+
+
+    if(availableStock === 0){
+
+      return;
+
+    }
+
+
 
 
     addToCart({
+
       ...product,
+
       size,
+
       quantity,
+
     });
 
 
+
     setShowPopup(true);
+
 
   }
 
@@ -54,284 +110,541 @@ export default function ProductDetails({
 
 
 
-  return (
 
 
-    <div
-      className="
-        w-full
-        max-w-xl
-      "
-    >
 
+return (
 
 
-      <p
-        className="
-          text-xs
-          uppercase
-          tracking-[0.5em]
-          text-red-500
-        "
-      >
-        UNSEEN DROP
-      </p>
 
+<div
 
+className="
+w-full
+max-w-xl
+"
 
+>
 
 
-      <h1
-        className="
-          mt-5
-          text-4xl
-          font-black
-          uppercase
-          leading-[0.9]
-          md:text-6xl
-        "
-      >
-        {product.name}
-      </h1>
 
 
 
+<p
 
+className="
+text-xs
+uppercase
+tracking-[0.5em]
+text-red-500
+"
 
-      <p
-        className="
-          mt-6
-          text-3xl
-          font-black
-        "
-      >
-        {product.price}
-      </p>
+>
 
+UNSEEN DROP
 
+</p>
 
 
 
-      <p
-        className="
-          mt-6
-          text-sm
-          leading-8
-          text-zinc-400
-          md:text-base
-        "
-      >
-        {product.description ||
-          "Premium heavyweight streetwear piece. Oversized fit. Limited production. Made for everyday movement."
-        }
-      </p>
 
 
 
 
+<h1
 
+className="
+mt-5
+text-4xl
+font-black
+uppercase
+leading-[0.9]
+md:text-6xl
+"
 
+>
 
-      {/* Size */}
+{product.name}
 
+</h1>
 
 
-      <div className="mt-10">
 
 
-        <h3
-          className="
-            mb-4
-            text-xs
-            font-black
-            uppercase
-            tracking-widest
-          "
-        >
-          Select Size
-        </h3>
 
 
 
-        <SizeSelector
-          size={size}
-          setSize={setSize}
-        />
+<p
 
+className="
+mt-6
+text-3xl
+font-black
+"
 
-      </div>
+>
 
+{product.price}
 
+</p>
 
 
 
 
 
-      {/* Quantity */}
 
 
 
-      <div
-        className="
-          mt-8
-          flex
-          items-center
-          justify-between
-          rounded-full
-          border
-          border-white/10
-          px-6
-          py-4
-        "
-      >
 
+<p
 
-        <span
-          className="
-            text-xs
-            font-black
-            uppercase
-            tracking-widest
-          "
-        >
-          Quantity
-        </span>
+className="
+mt-6
+text-sm
+leading-8
+text-zinc-400
+md:text-base
+"
 
+>
 
+{product.description ||
 
+"Premium heavyweight streetwear piece. Oversized fit. Limited production."
 
+}
 
-        <div
-          className="
-            flex
-            items-center
-            gap-5
-          "
-        >
+</p>
 
 
-          <button
-            onClick={() =>
-              setQuantity(
-                Math.max(1, quantity - 1)
-              )
-            }
-            className="
-              text-xl
-              text-zinc-400
-              hover:text-white
-            "
-          >
-            -
-          </button>
 
 
 
-          <span className="font-black">
-            {quantity}
-          </span>
 
 
 
-          <button
-            onClick={() =>
-              setQuantity(quantity + 1)
-            }
-            className="
-              text-xl
-              text-zinc-400
-              hover:text-white
-            "
-          >
-            +
-          </button>
 
 
-        </div>
 
 
-      </div>
+{/* SIZE */}
 
 
 
+<div
 
+className="
+mt-10
+"
 
+>
 
 
-      {/* Add Cart */}
 
+<h3
 
+className="
+mb-4
+text-xs
+font-black
+uppercase
+tracking-widest
+"
 
-      <button
-        onClick={handleAdd}
-        className="
-          mt-8
-          w-full
-          rounded-full
-          bg-red-600
-          py-5
-          text-sm
-          font-black
-          uppercase
-          tracking-[0.3em]
-          transition
-          hover:scale-[1.02]
-          hover:bg-red-700
-        "
-      >
-        Add To Cart
-      </button>
+>
 
+Select Size
 
+</h3>
 
 
 
 
 
-      {/* Features */}
 
+<SizeSelector
 
+size={size}
 
-      <div
-        className="
-          mt-10
-          grid
-          gap-4
-          text-sm
-          text-zinc-400
-        "
-      >
+setSize={(newSize)=>{
 
-        <p>
-          ✓ Premium heavyweight fabric
-        </p>
+setSize(newSize);
 
-        <p>
-          ✓ Oversized streetwear fit
-        </p>
+setQuantity(1);
 
-        <p>
-          ✓ Limited UNSEEN release
-        </p>
+}}
 
-      </div>
+/>
 
 
 
 
 
-      {/* Popup */}
 
 
-      <CartPopup
-        show={showPopup}
-        setShow={setShowPopup}
-      />
 
+<p
 
-    </div>
+className={`
+mt-4
+text-xs
+font-bold
 
+${
+availableStock === 0
 
-  );
+?
+
+"text-red-500"
+
+:
+
+"text-zinc-400"
+
+}
+
+`}
+
+>
+
+{
+
+availableStock === 0
+
+?
+
+"This size is sold out"
+
+:
+
+`Only ${availableStock} left in size ${size}`
+
+}
+
+</p>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* QUANTITY */}
+
+
+
+
+
+<div
+
+className="
+mt-8
+flex
+items-center
+justify-between
+rounded-full
+border
+border-white/10
+px-6
+py-4
+"
+
+>
+
+
+
+<span
+
+className="
+text-xs
+font-black
+uppercase
+tracking-widest
+"
+
+>
+
+Quantity
+
+</span>
+
+
+
+
+
+
+
+
+
+<div
+
+className="
+flex
+items-center
+gap-5
+"
+
+>
+
+
+
+
+
+<button
+
+onClick={()=>
+
+setQuantity(
+Math.max(
+1,
+quantity-1
+)
+)
+
+}
+
+className="
+text-xl
+text-zinc-400
+hover:text-white
+"
+
+>
+
+-
+
+</button>
+
+
+
+
+
+
+
+<span className="font-black">
+
+{quantity}
+
+</span>
+
+
+
+
+
+
+
+
+<button
+
+disabled={
+quantity >= availableStock
+}
+
+onClick={()=>
+
+setQuantity(
+quantity+1
+)
+
+}
+
+className="
+text-xl
+text-zinc-400
+hover:text-white
+disabled:opacity-30
+"
+
+>
+
++
+
+</button>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* BUTTON */}
+
+
+
+
+
+{
+
+availableStock === 0 ? (
+
+
+
+<button
+
+disabled
+
+className="
+mt-8
+w-full
+rounded-full
+bg-zinc-700
+py-5
+text-sm
+font-black
+uppercase
+tracking-[0.3em]
+text-zinc-400
+"
+
+>
+
+SIZE SOLD OUT
+
+</button>
+
+
+
+) : (
+
+
+
+<button
+
+onClick={handleAdd}
+
+className="
+mt-8
+w-full
+rounded-full
+bg-red-600
+py-5
+text-sm
+font-black
+uppercase
+tracking-[0.3em]
+transition
+hover:bg-red-700
+hover:scale-[1.02]
+"
+
+>
+
+ADD TO CART
+
+</button>
+
+
+
+)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* FEATURES */}
+
+
+
+<div
+
+className="
+mt-10
+grid
+gap-4
+text-sm
+text-zinc-400
+"
+
+>
+
+
+<p>
+✓ Premium heavyweight fabric
+</p>
+
+
+<p>
+✓ Oversized streetwear fit
+</p>
+
+
+<p>
+✓ Limited UNSEEN release
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<CartPopup
+
+show={showPopup}
+
+setShow={setShowPopup}
+
+/>
+
+
+
+
+
+
+
+</div>
+
+
+
+);
+
+
 
 }

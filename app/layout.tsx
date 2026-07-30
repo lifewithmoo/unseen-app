@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
+
 import "./globals.css";
 
-import { CartProvider } from "@/app/context/CartContext";
+import Navbar from "@/app/components/Navbar";
 
-import Navbar from "@/app/components/layout/Navbar";
-import Footer from "@/app/components/layout/Footer";
-import FloatingSocial from "@/app/components/FloatingSocial";
+import { CartProvider } from "@/app/context/CartContext";
+import { WishlistProvider } from "@/app/context/WishlistContext";
+
+
+
 
 
 export const metadata: Metadata = {
   title: "UNSEEN",
-  description: "Premium streetwear brand",
+  description:
+    "Premium heavyweight streetwear brand.",
 };
+
+
+
+
 
 
 
@@ -22,45 +30,61 @@ export default function RootLayout({
 }>) {
 
 
+
   return (
+
 
     <html lang="en">
 
 
-      <body>
+      <body
+        className="
+          bg-black
+          text-white
+        "
+      >
+
 
 
         <CartProvider>
 
 
-          <Navbar />
+          <WishlistProvider>
 
 
-          <div
-            className="
-              pt-32
-              md:pt-40
-            "
-          >
 
-            {children}
-
-          </div>
+            <Navbar />
 
 
-          <Footer />
 
 
-          <FloatingSocial />
+            <div
+              className="
+                pt-16
+              "
+            >
+
+              {children}
+
+            </div>
+
+
+
+
+
+          </WishlistProvider>
 
 
         </CartProvider>
+
+
 
 
       </body>
 
 
     </html>
+
 
   );
 
