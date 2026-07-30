@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 
-
 export default function Hero() {
-
 
   return (
 
@@ -27,8 +25,7 @@ export default function Hero() {
     >
 
 
-
-      {/* Background Image */}
+      {/* Background */}
 
       <div
         className="
@@ -38,25 +35,23 @@ export default function Hero() {
           bg-[url('/hero-bg.jpg')]
           bg-cover
           bg-center
+          scale-105
+          animate-pulse
         "
       />
 
 
 
-
-
-      {/* Dark Overlay */}
+      {/* Overlay */}
 
       <div
         className="
           absolute
           inset-0
           pointer-events-none
-          bg-black/70
+          bg-black/75
         "
       />
-
-
 
 
 
@@ -78,17 +73,12 @@ export default function Hero() {
 
 
 
-
-
-
       {/* Content */}
-
 
       <div
         className="
           relative
           z-10
-          pointer-events-auto
           mx-auto
           max-w-6xl
           text-center
@@ -97,21 +87,26 @@ export default function Hero() {
 
 
 
-
-        <p
+        <div
           className="
-            animate-pulse
-            text-xs
+            mx-auto
+            mb-6
+            inline-flex
+            rounded-full
+            border
+            border-red-500/40
+            bg-red-500/10
+            px-5
+            py-2
+            text-[10px]
+            font-black
             uppercase
-            tracking-[0.6em]
+            tracking-[0.5em]
             text-red-500
-            md:text-sm
           "
         >
-          NEW DROP 2026
-        </p>
-
-
+          Limited Drop 2026
+        </div>
 
 
 
@@ -119,7 +114,7 @@ export default function Hero() {
 
         <h1
           className="
-            mt-6
+            animate-[fadeIn_1s_ease-out]
             text-6xl
             font-black
             uppercase
@@ -140,9 +135,6 @@ export default function Hero() {
 
 
         </h1>
-
-
-
 
 
 
@@ -172,10 +164,6 @@ export default function Hero() {
 
 
 
-
-
-
-
         <div
           className="
             mt-10
@@ -189,20 +177,19 @@ export default function Hero() {
 
 
 
-
-
           <Link
             href="/shop"
             className="
               rounded-full
               bg-red-600
-              px-10
+              px-12
               py-5
               text-sm
               font-black
               uppercase
-              tracking-[0.25em]
+              tracking-[0.3em]
               transition
+              duration-300
               hover:scale-105
               hover:bg-red-700
             "
@@ -213,30 +200,26 @@ export default function Hero() {
 
 
 
-
-
-
           <Link
             href="/shop"
             className="
               rounded-full
               border
               border-white/30
-              px-10
+              px-12
               py-5
               text-sm
               font-black
               uppercase
-              tracking-[0.25em]
+              tracking-[0.3em]
               transition
+              duration-300
               hover:bg-white
               hover:text-black
             "
           >
-            View Collection
+            Collection
           </Link>
-
-
 
 
 
@@ -246,6 +229,35 @@ export default function Hero() {
 
 
 
+        {/* Scroll */}
+
+        <div
+          className="
+            mt-16
+            flex
+            flex-col
+            items-center
+            gap-3
+            text-[10px]
+            uppercase
+            tracking-[0.5em]
+            text-zinc-500
+          "
+        >
+
+          Scroll
+
+          <div
+            className="
+              h-10
+              w-px
+              bg-white/30
+            "
+          />
+
+        </div>
+
+
 
 
       </div>
@@ -253,11 +265,7 @@ export default function Hero() {
 
 
 
-
-
-
     </section>
-
 
   );
 

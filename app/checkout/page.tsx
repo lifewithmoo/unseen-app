@@ -5,8 +5,6 @@ import { useCart } from "@/app/context/CartContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-
-
 export default function CheckoutPage() {
 
 
@@ -26,7 +24,6 @@ export default function CheckoutPage() {
 
 
 
-
   const total = cart.reduce(
     (sum, item) =>
       sum +
@@ -40,9 +37,25 @@ export default function CheckoutPage() {
 
 
 
-
-
   const handleOrder = () => {
+
+
+
+    if (
+      !customer.name ||
+      !customer.email ||
+      !customer.phone ||
+      !customer.address
+    ) {
+
+      alert("Please complete your information first");
+
+      return;
+
+    }
+
+
+
 
 
     const message = `
@@ -88,7 +101,6 @@ Thank you.
 
 
 
-
     window.open(
       whatsappUrl,
       "_blank"
@@ -96,14 +108,15 @@ Thank you.
 
 
 
-
     clearCart();
+
 
 
     router.push("/success");
 
 
   };
+
 
 
 
@@ -124,7 +137,6 @@ Thank you.
         text-white
       "
     >
-
 
 
       <Link
@@ -158,8 +170,6 @@ Thank you.
 
 
 
-
-
       <div
         className="
           mt-12
@@ -171,15 +181,6 @@ Thank you.
 
 
 
-
-
-
-
-
-        {/* Customer Details */}
-
-
-
         <div
           className="
             rounded-3xl
@@ -187,7 +188,6 @@ Thank you.
             p-8
           "
         >
-
 
 
           <h2
@@ -203,9 +203,7 @@ Thank you.
 
 
 
-
           <div className="mt-8 space-y-5">
-
 
 
             <input
@@ -225,8 +223,6 @@ Thank you.
                 outline-none
               "
             />
-
-
 
 
 
@@ -250,8 +246,6 @@ Thank you.
 
 
 
-
-
             <input
               placeholder="Phone"
               value={customer.phone}
@@ -269,10 +263,6 @@ Thank you.
                 outline-none
               "
             />
-
-
-
-
 
 
 
@@ -297,7 +287,6 @@ Thank you.
 
 
 
-
           </div>
 
 
@@ -311,11 +300,6 @@ Thank you.
 
 
 
-
-        {/* Order Summary */}
-
-
-
         <div
           className="
             rounded-3xl
@@ -323,7 +307,6 @@ Thank you.
             p-8
           "
         >
-
 
 
           <h2
@@ -339,9 +322,7 @@ Thank you.
 
 
 
-
           <div className="mt-8 space-y-5">
-
 
 
             {cart.length === 0 ? (
@@ -350,12 +331,9 @@ Thank you.
                 Your cart is empty.
               </p>
 
-
             ) : (
 
-
               cart.map((item) => (
-
 
                 <div
                   key={`${item.id}-${item.size}`}
@@ -366,11 +344,9 @@ Thank you.
                   "
                 >
 
-
                   <span>
                     {item.name} x {item.quantity}
                   </span>
-
 
 
                   <span>
@@ -380,15 +356,11 @@ Thank you.
                   </span>
 
 
-
                 </div>
-
 
               ))
 
-
             )}
-
 
 
 
@@ -403,8 +375,6 @@ Thank you.
               "
             >
 
-
-
               <div
                 className="
                   flex
@@ -412,8 +382,6 @@ Thank you.
                   justify-between
                 "
               >
-
-
 
                 <span
                   className="
@@ -423,8 +391,6 @@ Thank you.
                 >
                   Total
                 </span>
-
-
 
 
                 <span
@@ -438,14 +404,10 @@ Thank you.
                 </span>
 
 
-
               </div>
 
 
-
             </div>
-
-
 
 
 
@@ -474,10 +436,7 @@ Thank you.
 
 
 
-
-
           </div>
-
 
 
 
@@ -485,16 +444,11 @@ Thank you.
 
 
 
-
-
-
       </div>
 
 
 
-
     </main>
-
 
   );
 

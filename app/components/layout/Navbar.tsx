@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function Navbar() {
 
+
   const { cart } = useCart();
 
   const [open, setOpen] = useState(false);
@@ -28,6 +29,7 @@ export default function Navbar() {
       "
     >
 
+
       <div
         className="
           mx-auto
@@ -43,16 +45,19 @@ export default function Navbar() {
 
 
 
+
         {/* Logo */}
 
 
         <Link
           href="/"
+          onClick={() => setOpen(false)}
           className="
-            text-2xl
+            text-xl
             font-black
             tracking-[0.45em]
             text-white
+            md:text-2xl
           "
         >
           UNSEEN
@@ -62,7 +67,7 @@ export default function Navbar() {
 
 
 
-        {/* Desktop Menu */}
+        {/* Desktop */}
 
 
         <div
@@ -73,6 +78,7 @@ export default function Navbar() {
             md:flex
           "
         >
+
 
           <Link
             href="/"
@@ -101,8 +107,9 @@ export default function Navbar() {
               hover:text-white
             "
           >
-            Shop All
+            Shop
           </Link>
+
 
 
 
@@ -152,33 +159,76 @@ export default function Navbar() {
 
 
 
-        {/* Mobile Buttons */}
+        {/* Mobile */}
 
 
-        <div className="flex items-center gap-4 md:hidden">
+        <div
+          className="
+            flex
+            items-center
+            gap-5
+            md:hidden
+          "
+        >
+
 
 
           <Link
             href="/cart"
-            className="text-xl"
+            className="
+              relative
+              text-xl
+            "
           >
+
             🛒
+
+
+            {cart.length > 0 && (
+
+              <span
+                className="
+                  absolute
+                  -right-3
+                  -top-3
+                  flex
+                  h-5
+                  w-5
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-red-600
+                  text-[10px]
+                  font-black
+                "
+              >
+                {cart.length}
+              </span>
+
+            )}
+
           </Link>
+
+
 
 
 
           <button
             onClick={() => setOpen(!open)}
             className="
-              text-2xl
+              text-3xl
               text-white
             "
           >
-            ☰
+
+            {open ? "✕" : "☰"}
+
           </button>
 
 
+
         </div>
+
 
 
       </div>
@@ -189,70 +239,125 @@ export default function Navbar() {
 
 
 
-      {/* Mobile Menu */}
+
+      {/* Mobile Full Menu */}
 
 
-      {open && (
+
+      <div
+        className={`
+          fixed
+          left-0
+          top-[73px]
+          h-[calc(100vh-73px)]
+          w-full
+          bg-black
+          px-8
+          py-10
+          transition-all
+          duration-300
+          md:hidden
+
+          ${
+            open
+              ? "translate-x-0 opacity-100"
+              : "pointer-events-none -translate-x-full opacity-0"
+          }
+
+        `}
+      >
+
+
 
         <div
           className="
-            border-t
-            border-white/10
-            bg-black
-            px-5
-            py-6
-            md:hidden
+            flex
+            flex-col
+            gap-8
           "
         >
 
 
-          <div
+
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
             className="
-              flex
-              flex-col
-              gap-6
+              text-3xl
+              font-black
+              uppercase
+              tracking-widest
             "
           >
-
-
-            <Link
-              href="/"
-              onClick={() => setOpen(false)}
-              className="
-                text-sm
-                uppercase
-                tracking-widest
-              "
-            >
-              Home
-            </Link>
+            Home
+          </Link>
 
 
 
-            <Link
-              href="/shop"
-              onClick={() => setOpen(false)}
-              className="
-                text-sm
-                uppercase
-                tracking-widest
-              "
-            >
-              Shop All
-            </Link>
+
+          <Link
+            href="/shop"
+            onClick={() => setOpen(false)}
+            className="
+              text-3xl
+              font-black
+              uppercase
+              tracking-widest
+            "
+          >
+            Shop
+          </Link>
 
 
 
-          </div>
+
+
+          <Link
+            href="/cart"
+            onClick={() => setOpen(false)}
+            className="
+              text-3xl
+              font-black
+              uppercase
+              tracking-widest
+            "
+          >
+            Cart
+          </Link>
+
+
+
 
 
         </div>
 
-      )}
+
+
+
+        <div
+          className="
+            absolute
+            bottom-10
+            left-8
+            text-xs
+            uppercase
+            tracking-[0.5em]
+            text-zinc-500
+          "
+        >
+          UNSEEN © 2026
+
+        </div>
+
+
+
+
+      </div>
 
 
 
     </nav>
 
   );
+
 }
