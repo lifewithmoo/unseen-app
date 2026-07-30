@@ -22,8 +22,10 @@ type CartContextType = {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
+  clearCart: () => void;
   total: number;
 };
+
 
 
 const CartContext = createContext<CartContextType | null>(null);
@@ -36,6 +38,7 @@ export function CartProvider({
   children: ReactNode;
 }) {
 
+
   const [cart, setCart] = useState<CartItem[]>([]);
 
 
@@ -44,33 +47,44 @@ export function CartProvider({
 
     const savedCart = localStorage.getItem("cart");
 
+
     if (savedCart) {
+
       setCart(JSON.parse(savedCart));
+
     }
 
   }, []);
 
 
 
+
   function addToCart(item: CartItem) {
+
 
     const updatedCart = [
       ...cart,
       item,
     ];
 
+
     setCart(updatedCart);
+
 
     localStorage.setItem(
       "cart",
       JSON.stringify(updatedCart)
     );
 
+
   }
 
 
 
+
+
   function removeFromCart(id: string) {
+
 
     const updatedCart = cart.filter(
       (item) => item.id !== id
@@ -85,7 +99,26 @@ export function CartProvider({
       JSON.stringify(updatedCart)
     );
 
+
   }
+
+
+
+
+
+  function clearCart() {
+
+
+    setCart([]);
+
+
+    localStorage.removeItem("cart");
+
+
+  }
+
+
+
 
 
 
@@ -97,33 +130,53 @@ export function CartProvider({
 
 
 
+
+
+
   return (
+
     <CartContext.Provider
+
       value={{
         cart,
         addToCart,
         removeFromCart,
+        clearCart,
         total,
       }}
+
     >
+
       {children}
+
     </CartContext.Provider>
+
   );
+
 }
+
+
 
 
 
 export function useCart() {
 
+
   const context = useContext(CartContext);
 
 
+
   if (!context) {
+
     throw new Error(
       "useCart must be used inside CartProvider"
     );
+
   }
 
 
+
   return context;
+
+
 }
