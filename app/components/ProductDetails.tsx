@@ -59,7 +59,7 @@ export default function ProductDetails({
   const [showPopup,setShowPopup] =
     useState(false);
 
-
+const [showSizeChart, setShowSizeChart] = useState(false);
 
 
 
@@ -158,7 +158,7 @@ mt-5
 text-4xl
 font-black
 uppercase
-leading-[0.9]
+leading-tight
 md:text-6xl
 "
 
@@ -264,10 +264,10 @@ Select Size
 
 <SizeSelector
 
+
 size={size}
 
 setSize={(newSize)=>{
-
 setSize(newSize);
 
 setQuantity(1);
@@ -275,6 +275,17 @@ setQuantity(1);
 }}
 
 />
+
+<div className="mt-4 flex justify-end">
+  <button
+    type="button"
+    onClick={() => setShowSizeChart(true)}
+    className="text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-400 transition"
+  >
+    Size Chart
+  </button>
+</div>
+
 
 
 
@@ -624,7 +635,77 @@ text-zinc-400
 
 
 
+{showSizeChart && (
+  <div
+    className="fixed inset-0 z-[100]  flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+    onClick={() => setShowSizeChart(false)}
+  >
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="w-full max-w-lg rounded-2xl border border-white/10 bg-zinc-900 p-6"
+    >
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-xl font-black uppercase tracking-widest">
+          Size Chart
+        </h2>
 
+        <button
+          onClick={() => setShowSizeChart(false)}
+          className="text-2xl text-zinc-400 hover:text-white"
+        >
+          ×
+        </button>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-center">
+          <thead>
+            <tr className="border-b border-white/10">
+              <th className="py-3">Size</th>
+              <th>Chest</th>
+              <th>Length</th>
+              <th>Shoulder</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr className="border-b border-white/10">
+              <td className="py-3 font-bold">S</td>
+              <td>54 cm</td>
+              <td>70 cm</td>
+              <td>49 cm</td>
+            </tr>
+
+            <tr className="border-b border-white/10">
+              <td className="py-3 font-bold">M</td>
+              <td>57 cm</td>
+              <td>73 cm</td>
+              <td>52 cm</td>
+            </tr>
+
+            <tr className="border-b border-white/10">
+              <td className="py-3 font-bold">L</td>
+              <td>60 cm</td>
+              <td>76 cm</td>
+              <td>55 cm</td>
+            </tr>
+
+            <tr>
+              <td className="py-3 font-bold">XL</td>
+              <td>63 cm</td>
+              <td>79 cm</td>
+              <td>58 cm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p className="mt-6 text-center text-xs text-zinc-500">
+        Measurements may vary by ±1–2 cm.
+      </p>
+    </div>
+  </div>
+)}
 <CartPopup
 
 show={showPopup}

@@ -122,18 +122,19 @@ export default function ShopPage() {
   return (
 
 
-
-    <main
-      className="
-        relative
-        min-h-screen
-        overflow-hidden
-        bg-black
-        pb-24
-        pt-36
-        text-white
-      "
-    >
+<main
+  className="
+    relative
+    min-h-screen
+    overflow-hidden
+    bg-black
+    pt-48
+    md:pt-48
+  
+    text-white
+  "
+>
+    
 
 
 

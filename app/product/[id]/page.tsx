@@ -64,17 +64,17 @@ export default async function ProductPage({
 
 
     <main
-      className="
-        min-h-screen
-        bg-black
-        px-4
-        pb-24
-        pt-28
-        text-white
-        md:px-6
-        md:pt-36
-      "
-    >
+  className="
+    min-h-screen
+    bg-black
+    px-4
+    pb-24
+    pt-64
+    text-white
+    md:px-6
+    md:pt-64
+  "
+>
 
 
 
@@ -123,21 +123,23 @@ export default async function ProductPage({
 
           <ProductGallery
 
-            product={{
+  product={{
 
-              image:
-                product.image,
+    image:
+      product.image,
 
-              hoverImage:
-                product.hoverImage,
+    hoverImage:
+      product.hoverImage,
 
-              name:
-                product.name,
+    video:
+      product.video,
 
-            }}
+    name:
+      product.name,
 
-          />
+  }}
 
+/>
 
 
 
@@ -148,14 +150,9 @@ export default async function ProductPage({
 
           {/* PRODUCT DETAILS */}
 
-
-
-
-          <ProductDetails
-
-            product={product}
-
-          />
+<div className="pt-24">
+  <ProductDetails product={product} />
+</div>
 
 
 

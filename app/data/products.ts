@@ -11,6 +11,8 @@ export const products = [
 
     hoverImage: "/products/unseen-black-back.jpg",
 
+    video: "/products/unseen-black-video.mp4",
+
     description:
       "Premium heavyweight cotton crafted for everyday wear. Designed with an oversized fit and finished with the signature UNSEEN aesthetic. Built for those who stand apart.",
 
@@ -46,6 +48,8 @@ export const products = [
 
     hoverImage: "/products/unseen-white-back.jpg",
 
+    video: "/products/unseen-white-video.mp4",
+
     description:
       "Minimal, clean and timeless. A heavyweight oversized tee made to elevate your everyday streetwear rotation with premium comfort.",
 
@@ -72,6 +76,7 @@ export const products = [
 
 
 
+
   {
     id: "3",
 
@@ -82,6 +87,8 @@ export const products = [
     image: "/products/unseen-washed-front.jpg",
 
     hoverImage: "/products/unseen-washed-back.jpg",
+
+    video: "/products/unseen-washed-video.mp4",
 
     description:
       "A vintage washed finish combined with heavyweight premium cotton. Limited release made for those who move differently.",
@@ -108,6 +115,8 @@ export const products = [
 
 
 
+
+
   {
     id: "4",
 
@@ -118,6 +127,8 @@ export const products = [
     image: "/products/unseen-black-hoodie-front.jpg",
 
     hoverImage: "/products/unseen-black-hoodie-back.jpg",
+
+    video: "/products/unseen-black-hoodie-video.mp4",
 
     description:
       "Heavyweight oversized hoodie built with premium fabric and a clean streetwear silhouette.",
@@ -138,7 +149,6 @@ export const products = [
     },
 
   },
-
 
 
 ];

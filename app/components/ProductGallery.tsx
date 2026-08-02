@@ -6,11 +6,13 @@ type Props = {
   product: {
     image: string;
     hoverImage: string;
+    video?: string;
     name: string;
   };
 };
 
 export default function ProductGallery({ product }: Props) {
+
   const images = [
     product.image,
     product.hoverImage,
@@ -19,12 +21,18 @@ export default function ProductGallery({ product }: Props) {
       image && arr.indexOf(image) === index
   );
 
-  const [activeImage, setActiveImage] = useState(images[0]);
+
+  const [activeMedia, setActiveMedia] = useState(
+    product.video ? "video" : images[0]
+  );
+
 
   return (
+
     <div className="w-full">
 
-      {/* Main Image */}
+
+      {/* Main Media */}
 
       <div
         className="
@@ -34,42 +42,46 @@ export default function ProductGallery({ product }: Props) {
           rounded-3xl
           border
           border-white/10
-          bg-gradient-to-br
-          from-zinc-900
-          via-black
-          to-zinc-900
+          bg-black
           shadow-[0_0_80px_rgba(225,29,72,0.15)]
         "
       >
-        <img
-          src={activeImage}
-          alt={product.name}
-          className="
-            h-[450px]
-            w-full
-            object-cover
-            transition-all
-            duration-700
-            group-hover:scale-110
-            md:h-[800px]
-          "
-        />
 
-        {/* Glow */}
 
-        <div
-          className="
-            pointer-events-none
-            absolute
-            inset-0
-            bg-gradient-to-t
-            from-black/40
-            via-transparent
-            to-transparent
-          "
-        />
+        {activeMedia === "video" ? (
 
-        {/* Badge */}
+          <video
+            src={product.video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="
+              h-[450px]
+              w-full
+              object-cover
+              md:h-[800px]
+            "
+          />
+
+        ) : (
+
+          <img
+            src={activeMedia}
+            alt={product.name}
+            className="
+              h-[450px]
+              w-full
+              object-cover
+              md:h-[800px]
+            "
+          />
+
+        )}
+
+
+
+        {/* Limited Badge */}
 
         <div
           className="
@@ -87,7 +99,13 @@ export default function ProductGallery({ product }: Props) {
         >
           LIMITED
         </div>
+
+
       </div>
+
+
+
+
 
       {/* Thumbnails */}
 
@@ -98,94 +116,122 @@ export default function ProductGallery({ product }: Props) {
           gap-4
         "
       >
-        {images.map((image, index) => (
+
+
+        {/* Video Thumbnail */}
+
+        {product.video && (
+
           <button
-            key={image}
-            onClick={() => setActiveImage(image)}
+
+            onClick={() =>
+              setActiveMedia("video")
+            }
+
             className={`
-              group
               relative
               overflow-hidden
               rounded-2xl
-              transition-all
-              duration-300
+              border
+              transition
 
               ${
-                activeImage === image
-                  ? "scale-105 border-2 border-red-600"
-                  : "border border-white/10 hover:border-white/40"
+                activeMedia === "video"
+                ?
+                "border-2 border-red-600 scale-105"
+                :
+                "border-white/10"
               }
             `}
           >
-            <img
-              src={image}
-              alt={product.name}
+
+            <video
+              src={product.video}
+              muted
               className="
                 h-24
                 w-20
                 object-cover
-                transition
-                duration-500
-                group-hover:scale-110
-                md:h-28
-                md:w-24
               "
             />
 
-            <div
+            <span
               className="
                 absolute
-                bottom-0
-                left-0
-                right-0
-                bg-black/70
-                py-1
-                text-center
-                text-[10px]
-                font-bold
-                uppercase
-                tracking-widest
+                inset-0
+                flex
+                items-center
+                justify-center
+                bg-black/40
+                text-xl
               "
             >
-              {index === 0 ? "Front" : "Back"}
-            </div>
+              ▶
+            </span>
+
           </button>
+
+        )}
+
+
+
+
+
+        {/* Images */}
+
+        {images.map((image,index)=>(
+
+          <button
+
+            key={image}
+
+            onClick={() =>
+              setActiveMedia(image)
+            }
+
+
+            className={`
+              overflow-hidden
+              rounded-2xl
+              border
+              transition
+
+              ${
+                activeMedia === image
+                ?
+                "border-2 border-red-600 scale-105"
+                :
+                "border-white/10"
+              }
+
+            `}
+
+          >
+
+            <img
+
+              src={image}
+
+              alt={product.name}
+
+              className="
+                h-24
+                w-20
+                object-cover
+              "
+
+            />
+
+
+          </button>
+
         ))}
+
+
       </div>
 
-      {/* Info */}
-
-      <div
-        className="
-          mt-8
-          grid
-          grid-cols-3
-          gap-3
-          text-center
-        "
-      >
-        <div className="rounded-2xl bg-zinc-900 p-4">
-          <p className="text-2xl">🚚</p>
-          <p className="mt-2 text-xs uppercase tracking-widest text-zinc-400">
-            Fast Shipping
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-zinc-900 p-4">
-          <p className="text-2xl">⭐</p>
-          <p className="mt-2 text-xs uppercase tracking-widest text-zinc-400">
-            Premium Cotton
-          </p>
-        </div>
-
-        <div className="rounded-2xl bg-zinc-900 p-4">
-          <p className="text-2xl">🔄</p>
-          <p className="mt-2 text-xs uppercase tracking-widest text-zinc-400">
-            Easy Exchange
-          </p>
-        </div>
-      </div>
 
     </div>
+
   );
 }

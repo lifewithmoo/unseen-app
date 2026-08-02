@@ -25,7 +25,6 @@ export default function CheckoutPage() {
   );
 
 
-
   const total = cart.reduce(
     (sum, item) =>
       sum +
@@ -36,8 +35,7 @@ export default function CheckoutPage() {
 
 
 
-
-  const handleOrder = () => {
+  const handleOrder = async () => {
 
 
     if (
@@ -103,19 +101,100 @@ Thank you.
     );
 
 
+
+    // SAVE ORDER TO DASHBOARD
+
+    const orderId = `UN-${new Date()
+  .toISOString()
+  .slice(0, 10)
+  .replace(/-/g, "")}-${Date.now().toString().slice(-3)}`;
+  
+    const newOrder = {
+
+      id: Date.now(),
+
+      orderId,
+      
+      customer: {
+
+        name: customer.name,
+        email: customer.email,
+        phone: customer.phone,
+        address: customer.address,
+
+      },
+
+
+      items: cart,
+
+      total,
+
+      payment,
+
+      status: "New",
+
+      createdAt: new Date().toISOString(),
+
+    };
+
+
+
+    const oldOrders =
+      JSON.parse(
+        localStorage.getItem("orders") || "[]"
+      );
+
+
+
+    localStorage.setItem(
+      "orders",
+      JSON.stringify([
+        ...oldOrders,
+        newOrder,
+      ])
+    );
+
+
+
+    // SEND CONFIRMATION EMAIL
+
+await fetch("/api/send-confirmation", {
+
+  method: "POST",
+
+  headers: {
+    "Content-Type": "application/json",
+  },
+
+  body: JSON.stringify({
+
+  orderId,
+
+  name: customer.name,
+
+  email: customer.email,
+
+  phone: customer.phone,
+
+  address: customer.address,
+
+  items: cart,
+
+  total: `${total} EGP`,
+
+}),
+
+});
+
+
     clearCart();
 
 
     router.push("/success");
 
+
   };
-
-
-
-
-
-
-  return (
+    return (
 
     <main
       className="
@@ -142,8 +221,6 @@ Thank you.
 
 
 
-
-
       <h1
         className="
           mt-10
@@ -157,9 +234,6 @@ Thank you.
 
 
 
-
-
-
       <div
         className="
           mt-12
@@ -170,12 +244,7 @@ Thank you.
       >
 
 
-
-
-
-
         {/* CUSTOMER DETAILS */}
-
 
 
         <div
@@ -197,10 +266,7 @@ Thank you.
           </h2>
 
 
-
-
           <div className="mt-8 space-y-5">
-
 
 
             <input
@@ -228,8 +294,6 @@ Thank you.
                 focus:border-red-600
               "
             />
-
-
 
 
 
@@ -261,8 +325,6 @@ Thank you.
 
 
 
-
-
             <input
               placeholder="Phone Number"
               value={customer.phone}
@@ -288,8 +350,6 @@ Thank you.
                 focus:border-red-600
               "
             />
-
-
 
 
 
@@ -322,12 +382,6 @@ Thank you.
 
 
 
-
-
-            {/* PAYMENT METHOD */}
-
-
-
             <div
               className="
                 mt-8
@@ -345,7 +399,6 @@ Thank you.
               >
                 Payment Method
               </h3>
-
 
 
 
@@ -368,9 +421,7 @@ Thank you.
                   type="radio"
                   name="payment"
                   value="Cash on Delivery"
-                  checked={
-                    payment === "Cash on Delivery"
-                  }
+                  checked={payment === "Cash on Delivery"}
                   onChange={(e) =>
                     setPayment(e.target.value)
                   }
@@ -381,7 +432,11 @@ Thank you.
                   Cash on Delivery
                 </span>
 
-              </label>              <label
+              </label>
+
+
+
+              <label
                 className="
                   flex
                   cursor-pointer
@@ -400,9 +455,7 @@ Thank you.
                   type="radio"
                   name="payment"
                   value="Vodafone Cash"
-                  checked={
-                    payment === "Vodafone Cash"
-                  }
+                  checked={payment === "Vodafone Cash"}
                   onChange={(e) =>
                     setPayment(e.target.value)
                   }
@@ -411,42 +464,45 @@ Thank you.
 
                 <span className="font-bold">
                   Vodafone Cash
+                </span>
 
-<label
- 
- 
- className="
-    flex
-    cursor-not-allowed
-    items-center
-    gap-3
-    rounded-2xl
-    border
-    border-white/10
-    bg-black/40
-    p-4
-    opacity-50
-  "
->
+              </label>
 
-  <input
-    type="radio"
-    name="payment"
-    disabled
-    className="accent-red-600"
-  />
 
-  <div>
-    <p className="font-bold">
-      Credit / Debit Card
-    </p>
 
-    <p className="text-xs text-zinc-500">
-      Coming Soon
-    </p>
-  </div>
+              <label
+                className="
+                  flex
+                  cursor-not-allowed
+                  items-center
+                  gap-3
+                  rounded-2xl
+                  border
+                  border-white/10
+                  bg-black/40
+                  p-4
+                  opacity-50
+                "
+              >
 
-</label></span>
+                <input
+                  type="radio"
+                  name="payment"
+                  disabled
+                  className="accent-red-600"
+                />
+
+                <div>
+
+                  <p className="font-bold">
+                    Credit / Debit Card
+                  </p>
+
+                  <p className="text-xs text-zinc-500">
+                    Coming Soon
+                  </p>
+
+                </div>
 
               </label>
 
@@ -454,25 +510,13 @@ Thank you.
             </div>
 
 
-
           </div>
 
 
         </div>
-
-
-
-
-
-
-
-
+               
 
         {/* ORDER SUMMARY */}
-
-
-
-
 
         <div
           className="
@@ -481,7 +525,6 @@ Thank you.
             p-8
           "
         >
-
 
           <h2
             className="
@@ -494,10 +537,7 @@ Thank you.
 
 
 
-
-
           <div className="mt-8 space-y-5">
-
 
 
             {cart.length === 0 ? (
@@ -541,8 +581,6 @@ Thank you.
 
 
 
-
-
             <div
               className="
                 border-t
@@ -550,7 +588,6 @@ Thank you.
                 pt-5
               "
             >
-
 
               <div
                 className="
@@ -560,7 +597,6 @@ Thank you.
                 "
               >
 
-
                 <span
                   className="
                     text-xl
@@ -569,7 +605,6 @@ Thank you.
                 >
                   Total
                 </span>
-
 
 
                 <span
@@ -585,13 +620,7 @@ Thank you.
 
               </div>
 
-
-
             </div>
-
-
-
-
 
 
 
@@ -640,13 +669,10 @@ Thank you.
           </div>
 
 
-
         </div>
 
 
-
       </div>
-
 
 
     </main>

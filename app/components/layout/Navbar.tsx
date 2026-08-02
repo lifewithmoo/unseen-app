@@ -143,7 +143,7 @@ export default function Navbar() {
       <header
 
         className={`
-          fixed
+          sticky
           top-0
           z-50
           w-full
