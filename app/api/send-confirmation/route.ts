@@ -1,12 +1,12 @@
 import { Resend } from "resend";
 
-const resend = new Resend(
-  process.env.RESEND_API_KEY
-);
+
 
 export async function POST(
   request: Request
 ) {
+
+const resend = new Resend(process.env.RESEND_API_KEY!);
 
   try {
 
@@ -22,51 +22,59 @@ export async function POST(
 
 
     const itemsHTML = data.items
-      ?.map(
-        (item: any) => `
-        
-        <div style="
-          padding:15px 0;
-          border-bottom:1px solid #ddd;
-        ">
+  ?.map(
+    (item: any) => `
+      <div style="
+        display:flex;
+        align-items:center;
+        gap:20px;
+        padding:20px 0;
+        border-bottom:1px solid #e5e5e5;
+      ">
+
+        <img
+         src="https://unseenapparel.space${item.image}"
+          alt="${item.name}"
+          width="110"
+          height="110"
+          style="
+            width:110px;
+            height:110px;
+            object-fit:cover;
+            border-radius:12px;
+            border:1px solid #ddd;
+          "
+        />
+
+        <div style="flex:1;">
 
           <p style="
-            margin:5px 0;
-            font-size:16px;
+            margin:0 0 8px;
+            font-size:18px;
+            font-weight:bold;
+            color:#111;
           ">
-            <strong>${item.name}</strong>
+            ${item.name}
           </p>
 
-
-          <p style="
-            margin:5px 0;
-            color:#555;
-          ">
-            Size: ${item.size || "N/A"}
+          <p style="margin:4px 0;color:#666;">
+            <strong>Size:</strong> ${item.size}
           </p>
 
-
-          <p style="
-            margin:5px 0;
-            color:#555;
-          ">
-            Quantity: ${item.quantity}
+          <p style="margin:4px 0;color:#666;">
+            <strong>Quantity:</strong> ${item.quantity}
           </p>
 
-
-          <p style="
-            margin:5px 0;
-            color:#555;
-          ">
-            Price: ${item.price}
+          <p style="margin:4px 0;color:#666;">
+            <strong>Price:</strong> ${item.price}
           </p>
-
 
         </div>
 
-        `
-      )
-      .join("");
+      </div>
+    `
+  )
+  .join("");
 
 
 
