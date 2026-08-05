@@ -18,7 +18,6 @@ export const products = [
 
     category: "Tees",
 
-
     sizes: {
 
       S: 3,
@@ -32,8 +31,6 @@ export const products = [
     },
 
   },
-
-
 
 
 
@@ -55,7 +52,6 @@ export const products = [
 
     category: "Tees",
 
-
     sizes: {
 
       S: 2,
@@ -72,83 +68,43 @@ export const products = [
 
 
 
+  
 
 
 
+  
 
 
   {
-    id: "3",
+    id: "5",
 
-    name: "UNSEEN Washed Tee",
+    name: "UNSEEN Eye Tee",
 
     price: "650 EGP",
 
-    image: "/products/unseen-washed-front.jpg",
+    image: "/products/unseen-eye-front.jpg",
 
-    hoverImage: "/products/unseen-washed-back.jpg",
+    hoverImage: "/products/unseen-eye-back.jpg",
 
-    video: "/products/unseen-washed-video.mp4",
+    video: "/products/unseen-eye-video.mp4",
 
     description:
-      "A vintage washed finish combined with heavyweight premium cotton. Limited release made for those who move differently.",
+      "Version 1 introduces the UNSEEN Eye Tee, inspired by the belief that not everything needs to be seen to be real. Featuring a clean minimal front with the signature red star and a bold eye graphic on the back, this oversized heavyweight tee is crafted from premium 240 GSM cotton for exceptional comfort, durability, and everyday wear. A statement piece designed for those who choose to stand apart.",
 
     category: "Tees",
 
-
     sizes: {
 
-      S: 0,
+      S: 5,
 
-      M: 4,
+      M: 8,
 
-      L: 3,
+      L: 6,
 
-      XL: 1,
+      XL: 3,
 
     },
 
   },
-
-
-
-
-
-
-
-
-  {
-    id: "4",
-
-    name: "UNSEEN Black Hoodie",
-
-    price: "1200 EGP",
-
-    image: "/products/unseen-black-hoodie-front.jpg",
-
-    hoverImage: "/products/unseen-black-hoodie-back.jpg",
-
-    video: "/products/unseen-black-hoodie-video.mp4",
-
-    description:
-      "Heavyweight oversized hoodie built with premium fabric and a clean streetwear silhouette.",
-
-    category: "Hoodies",
-
-
-    sizes: {
-
-      S: 2,
-
-      M: 6,
-
-      L: 4,
-
-      XL: 2,
-
-    },
-
-  },
-
 
 ];
