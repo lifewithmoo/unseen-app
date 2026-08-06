@@ -6,7 +6,6 @@ type Props = {
   product: {
     image: string;
     hoverImage: string;
-    video?: string;
     name: string;
   };
 };
@@ -21,18 +20,13 @@ export default function ProductGallery({ product }: Props) {
       image && arr.indexOf(image) === index
   );
 
-
-  const [activeMedia, setActiveMedia] = useState(
-    product.video ? "video" : images[0]
-  );
-
+  const [activeImage, setActiveImage] = useState(images[0]);
 
   return (
 
     <div className="w-full">
 
-
-      {/* Main Media */}
+      {/* Main Image */}
 
       <div
         className="
@@ -47,39 +41,16 @@ export default function ProductGallery({ product }: Props) {
         "
       >
 
-
-        {activeMedia === "video" ? (
-
-          <video
-            src={product.video}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="
-              h-[450px]
-              w-full
-              object-cover
-              md:h-[800px]
-            "
-          />
-
-        ) : (
-
-          <img
-            src={activeMedia}
-            alt={product.name}
-            className="
-              h-[450px]
-              w-full
-              object-cover
-              md:h-[800px]
-            "
-          />
-
-        )}
-
-
+        <img
+          src={activeImage}
+          alt={product.name}
+          className="
+            h-[450px]
+            w-full
+            object-cover
+            md:h-[800px]
+          "
+        />
 
         {/* Limited Badge */}
 
@@ -100,12 +71,7 @@ export default function ProductGallery({ product }: Props) {
           LIMITED
         </div>
 
-
       </div>
-
-
-
-
 
       {/* Thumbnails */}
 
@@ -117,119 +83,39 @@ export default function ProductGallery({ product }: Props) {
         "
       >
 
-
-        {/* Video Thumbnail */}
-
-        {product.video && (
+        {images.map((image) => (
 
           <button
-
-            onClick={() =>
-              setActiveMedia("video")
-            }
-
-            className={`
-              relative
-              overflow-hidden
-              rounded-2xl
-              border
-              transition
-
-              ${
-                activeMedia === "video"
-                ?
-                "border-2 border-red-600 scale-105"
-                :
-                "border-white/10"
-              }
-            `}
-          >
-
-            <video
-              src={product.video}
-              muted
-              className="
-                h-24
-                w-20
-                object-cover
-              "
-            />
-
-            <span
-              className="
-                absolute
-                inset-0
-                flex
-                items-center
-                justify-center
-                bg-black/40
-                text-xl
-              "
-            >
-              ▶
-            </span>
-
-          </button>
-
-        )}
-
-
-
-
-
-        {/* Images */}
-
-        {images.map((image,index)=>(
-
-          <button
-
             key={image}
-
-            onClick={() =>
-              setActiveMedia(image)
-            }
-
-
+            onClick={() => setActiveImage(image)}
             className={`
               overflow-hidden
               rounded-2xl
               border
               transition
-
               ${
-                activeMedia === image
-                ?
-                "border-2 border-red-600 scale-105"
-                :
-                "border-white/10"
+                activeImage === image
+                  ? "border-2 border-red-600 scale-105"
+                  : "border-white/10"
               }
-
             `}
-
           >
 
             <img
-
               src={image}
-
               alt={product.name}
-
               className="
                 h-24
                 w-20
                 object-cover
               "
-
             />
-
 
           </button>
 
         ))}
 
-
       </div>
-
 
     </div>
 

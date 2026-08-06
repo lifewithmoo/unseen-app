@@ -7,78 +7,40 @@ import ProductGallery from "@/app/components/ProductGallery";
 import RelatedProducts from "@/app/components/RelatedProducts";
 import ProductExtraInfo from "@/app/components/ProductExtraInfo";
 
-
-
 type Props = {
   params: Promise<{
     id: string;
   }>;
 };
 
-
-
-
-
-
-
 export default async function ProductPage({
   params,
 }: Props) {
 
+  const { id } = await params;
 
-
-  const { id } =
-    await params;
-
-
-
-
-
-  const product =
-    products.find(
-      (item) =>
-        item.id === id
-    );
-
-
-
-
-
+  const product = products.find(
+    (item) => item.id === id
+  );
 
   if (!product) {
-
     notFound();
-
   }
-
-
-
-
-
-
-
-
 
   return (
 
-
-
     <main
-  className="
-    min-h-screen
-    bg-black
-    px-4
-    pb-24
-    pt-64
-    text-white
-    md:px-6
-    md:pt-64
-  "
->
-
-
-
-
+      className="
+        min-h-screen
+        bg-black
+        px-4
+        pb-24
+        pt-64
+        text-white
+        md:px-6
+        md:pt-64
+      "
+    >
 
       <div
         className="
@@ -87,19 +49,7 @@ export default async function ProductPage({
         "
       >
 
-
-
-
-
-
-
-
-
         {/* PRODUCT SECTION */}
-
-
-
-
 
         <div
           className="
@@ -110,123 +60,38 @@ export default async function ProductPage({
           "
         >
 
-
-
-
-
-
-
           {/* IMAGE GALLERY */}
 
-
-
-
           <ProductGallery
-
-  product={{
-
-    image:
-      product.image,
-
-    hoverImage:
-      product.hoverImage,
-
-    video:
-      product.video,
-
-    name:
-      product.name,
-
-  }}
-
-/>
-
-
-
-
-
-
-
+            product={{
+              image: product.image,
+              hoverImage: product.hoverImage,
+              name: product.name,
+            }}
+          />
 
           {/* PRODUCT DETAILS */}
 
-<div className="pt-24">
-  <ProductDetails product={product} />
-</div>
-
-
-
-
-
-
+          <div className="pt-24">
+            <ProductDetails product={product} />
+          </div>
 
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
         {/* EXTRA INFORMATION */}
-
-
-
-
 
         <ProductExtraInfo />
 
-
-
-
-
-
-
-
-
         {/* RELATED PRODUCTS */}
 
-
-
-
-
         <RelatedProducts
-
-          currentId={
-            product.id
-          }
-
-          category={
-            product.category
-          }
-
+          currentId={product.id}
+          category={product.category}
         />
-
-
-
-
-
-
-
-
 
       </div>
 
-
-
-
-
-
-
     </main>
 
-
   );
-
 }

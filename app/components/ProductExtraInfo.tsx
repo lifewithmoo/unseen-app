@@ -19,7 +19,7 @@ export default function ProductExtraInfo() {
     {
       title: "Shipping Information",
       content:
-        "Orders are processed within 1-3 business days. Delivery time depends on your location. You will receive your order tracking details after confirmation.",
+        "Orders are processed within 4-6 business days. Delivery time depends on your location. You will receive your order tracking details after confirmation.",
     },
 
     {

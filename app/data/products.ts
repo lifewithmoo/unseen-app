@@ -3,7 +3,7 @@ export const products = [
   {
     id: "1",
 
-    name: "UNSEEN Black Tee",
+    name: "UNSEEN Oversized Black Tee",
 
     price: "650 EGP",
 
@@ -19,15 +19,10 @@ export const products = [
     category: "Tees",
 
     sizes: {
-
       S: 3,
-
       M: 10,
-
       L: 5,
-
       XL: 0,
-
     },
 
   },
@@ -37,7 +32,7 @@ export const products = [
   {
     id: "2",
 
-    name: "UNSEEN White Tee",
+    name: "UNSEEN Oversized White Tee",
 
     price: "650 EGP",
 
@@ -53,32 +48,20 @@ export const products = [
     category: "Tees",
 
     sizes: {
-
       S: 2,
-
       M: 8,
-
       L: 6,
-
       XL: 2,
-
     },
 
   },
 
 
 
-  
-
-
-
-  
-
-
   {
-    id: "5",
+    id: "3",
 
-    name: "UNSEEN Eye Tee",
+    name: "UNSEEN Oversized Eye Tee",
 
     price: "650 EGP",
 
@@ -89,20 +72,44 @@ export const products = [
     video: "/products/unseen-eye-video.mp4",
 
     description:
-      "Version 1 introduces the UNSEEN Eye Tee, inspired by the belief that not everything needs to be seen to be real. Featuring a clean minimal front with the signature red star and a bold eye graphic on the back, this oversized heavyweight tee is crafted from premium 240 GSM cotton for exceptional comfort, durability, and everyday wear. A statement piece designed for those who choose to stand apart.",
+      "Version 1 introduces the UNSEEN Oversized Eye Tee, inspired by the belief that not everything needs to be seen to be real. Featuring a clean minimal front with the signature red star and a bold eye graphic on the back, this premium 240 GSM heavyweight cotton tee delivers exceptional comfort, durability, and a timeless oversized silhouette.",
 
     category: "Tees",
 
     sizes: {
-
       S: 5,
-
       M: 8,
-
       L: 6,
-
       XL: 3,
+    },
 
+  },
+
+
+
+  {
+    id: "4",
+
+    name: "UNSEEN Oversized Silence Tee",
+
+    price: "650 EGP",
+
+    image: "/products/unseen-silence-front.jpg",
+
+    hoverImage: "/products/unseen-silence-back.jpg",
+
+    video: "/products/unseen-silence-video.mp4",
+
+    description:
+      "The UNSEEN Oversized Silence Tee is inspired by the mindset of moving with purpose instead of seeking attention. Featuring a subtle front artwork and a bold statement back print, this premium 240 GSM heavyweight cotton tee combines everyday comfort with a clean oversized streetwear silhouette. Move in silence. Make noise later.",
+
+    category: "Tees",
+
+    sizes: {
+      S: 4,
+      M: 8,
+      L: 7,
+      XL: 3,
     },
 
   },

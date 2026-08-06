@@ -32,7 +32,9 @@ export default function CheckoutPage() {
         item.quantity,
     0
   );
+const shippingFee = total > 0 ? 70 : 0;
 
+const finalTotal = total + shippingFee;
 
 
   const handleOrder = async () => {
@@ -82,8 +84,9 @@ Price: ${item.price}
 
 
 
-TOTAL: ${total} EGP
-
+SUBTOTAL: ${total} EGP
+SHIPPING: ${shippingFee} EGP
+TOTAL: ${finalTotal} EGP
 
 Thank you.
 `;
@@ -127,7 +130,11 @@ Thank you.
 
       items: cart,
 
-      total,
+      subtotal: total,
+
+shipping: shippingFee,
+
+total: finalTotal,
 
       payment,
 
@@ -180,8 +187,11 @@ await fetch("/api/send-confirmation", {
 
   items: cart,
 
-  total: `${total} EGP`,
+subtotal: `${total} EGP`,
 
+shipping: `${shippingFee} EGP`,
+
+total: `${finalTotal} EGP`,
 }),
 
 });
@@ -579,7 +589,19 @@ await fetch("/api/send-confirmation", {
             )}
 
 
+<div className="mt-6 space-y-3 border-t border-white/10 pt-6">
 
+  <div className="flex items-center justify-between text-zinc-400">
+    <span>Subtotal</span>
+    <span>{total} EGP</span>
+  </div>
+
+  <div className="flex items-center justify-between text-zinc-400">
+    <span>Shipping</span>
+    <span>{shippingFee} EGP</span>
+  </div>
+
+</div>
 
             <div
               className="
@@ -614,8 +636,7 @@ await fetch("/api/send-confirmation", {
                     text-red-500
                   "
                 >
-                  {total} EGP
-                </span>
+{finalTotal} EGP                </span>
 
 
               </div>
