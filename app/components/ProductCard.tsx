@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { Heart } from "lucide-react";
+import { useWishlist } from "@/app/context/WishlistContext";
 
 
 type Product = {
@@ -17,12 +19,25 @@ type Product = {
 
 
 
-
 export default function ProductCard({
   product,
 }:{
   product: Product;
 }) {
+
+
+const {
+  wishlist,
+  addToWishlist,
+  removeFromWishlist,
+} = useWishlist();
+
+
+
+const isWishlisted = wishlist.some(
+  (item) => item.id === product.id
+);
+
 
 
 
@@ -52,8 +67,6 @@ hover:border-white/30
 
 
 
-
-
 <div
 className="
 relative
@@ -62,6 +75,83 @@ rounded-2xl
 bg-zinc-900
 "
 >
+
+
+
+
+
+{/* Wishlist Button */}
+
+<button
+
+onClick={(e)=>{
+
+e.preventDefault();
+e.stopPropagation();
+
+
+if(isWishlisted){
+
+removeFromWishlist(product.id);
+
+}else{
+
+addToWishlist({
+
+id: product.id,
+name: product.name,
+price: product.price,
+image: product.image,
+
+});
+
+}
+
+}}
+
+className="
+absolute
+right-4
+top-4
+z-20
+rounded-full
+bg-black/50
+p-3
+backdrop-blur-md
+transition
+duration-300
+hover:scale-110
+"
+
+>
+
+
+<Heart
+
+size={22}
+
+className={
+
+isWishlisted
+
+?
+
+"fill-red-500 text-red-500"
+
+:
+
+"text-white"
+
+}
+
+/>
+
+
+</button>
+
+
+
+
 
 
 
@@ -86,6 +176,7 @@ md:h-[520px]
 
 
 
+
 <img
 
 src={product.hoverImage}
@@ -105,6 +196,8 @@ group-hover:opacity-100
 "
 
 />
+
+
 
 
 
@@ -136,6 +229,8 @@ New Drop
 
 
 
+
+
 </div>
 
 
@@ -157,6 +252,7 @@ pt-5
 
 
 
+
 <div
 className="
 flex
@@ -165,6 +261,7 @@ justify-between
 gap-3
 "
 >
+
 
 
 <h3
@@ -183,6 +280,8 @@ md:text-base
 
 
 
+
+
 <p
 className="
 text-lg
@@ -197,8 +296,8 @@ text-red-500
 
 
 
-</div>
 
+</div>
 
 
 
@@ -216,10 +315,15 @@ font-bold
 
 ${
 product.stock === 0
+
 ?
+
 "text-red-500"
+
 :
+
 "text-zinc-400"
+
 }
 
 `}
@@ -249,6 +353,7 @@ product.stock === 0
 
 
 
+
 <p
 className="
 mt-3
@@ -262,6 +367,9 @@ text-zinc-400
 {product.description}
 
 </p>
+
+
+
 
 
 
@@ -294,7 +402,11 @@ View Piece
 
 
 
+
+
 </div>
+
+
 
 
 

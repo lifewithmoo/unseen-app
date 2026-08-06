@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-
+import { UserRound, Mail } from "lucide-react";
 import { useCart } from "@/app/context/CartContext";
 import { useWishlist } from "@/app/context/WishlistContext";
 import { products } from "@/app/data/products";
@@ -327,85 +327,93 @@ export default function Navbar() {
 
           <div
 
-            className="
-              flex
-              items-center
-              gap-4
-            "
+className="
+  flex
+  items-center
+  gap-4
+"
 
-          >
-
-
-
-            <button
-
-              onClick={() =>
-                setSearchOpen(true)
-              }
-
-              className="text-lg"
-
-            >
-
-              🔍
-
-            </button>
+>
 
 
+<Link
 
+href="/about"
 
+className="
+hidden
+md:block
+text-zinc-400
+hover:text-white
+transition
+"
 
+>
 
+<UserRound size={21}/>
 
-            <Link
-
-              href="/cart"
-
-              className="
-                relative
-                text-lg
-              "
-
-            >
-
-              🛒
+</Link>
 
 
 
-              {cartCount > 0 && (
+<Link
 
-                <span
+href="/contact"
 
-                  className="
-                    absolute
-                    -right-3
-                    -top-3
-                    h-4
-                    w-4
-                    rounded-full
-                    bg-red-600
-                    text-[9px]
-                    flex
-                    items-center
-                    justify-center
-                  "
+className="
+hidden
+md:block
+text-zinc-400
+hover:text-white
+transition
+"
 
-                >
+>
 
-                  {cartCount}
+<Mail size={21}/>
 
-                </span>
-
-              )}
-
-
-
-            </Link>
+</Link>
 
 
 
 
-          </div>
+
+<button
+
+onClick={() =>
+setSearchOpen(true)
+}
+
+className="text-lg"
+
+>
+
+🔍
+
+</button>
+
+
+
+
+
+<Link
+
+href="/cart"
+
+className="
+relative
+text-lg
+"
+
+>
+
+🛒
+
+
+</Link>
+
+
+</div>
 
 
 
@@ -441,22 +449,32 @@ export default function Navbar() {
             <div className="flex flex-col gap-5">
 
 
-              <Link href="/shop">
-                SHOP
-              </Link>
+<Link href="/about">
+ABOUT US
+</Link>
 
 
-              <Link href="/favorites">
-                WISHLIST
-              </Link>
+<Link href="/contact">
+CONTACT
+</Link>
 
 
-              <Link href="/cart">
-                CART
-              </Link>
+<Link href="/shop">
+SHOP
+</Link>
 
 
-            </div>
+<Link href="/favorites">
+WISHLIST
+</Link>
+
+
+<Link href="/cart">
+CART
+</Link>
+
+
+</div>
 
 
 

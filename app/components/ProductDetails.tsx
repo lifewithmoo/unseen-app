@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { useCart } from "@/app/context/CartContext";
-
+import SizeChart from "@/app/components/SizeChart";
 import SizeSelector from "@/app/components/SizeSelector";
 import CartPopup from "@/app/components/CartPopup";
 
@@ -269,7 +269,7 @@ size={size}
 
 setSize={(newSize)=>{
 setSize(newSize);
-
+<SizeChart />
 setQuantity(1);
 
 }}

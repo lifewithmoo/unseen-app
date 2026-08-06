@@ -12,12 +12,30 @@ export default function CartPage() {
     decreaseQuantity,
   } = useCart();
 
-  const total = cart.reduce(
-    (sum, item) =>
-      sum +
-      Number(item.price.replace(" EGP", "")) * item.quantity,
-    0
-  );
+  const subtotal = cart.reduce(
+  (sum, item) =>
+    sum +
+    Number(item.price.replace(" EGP", "")) * item.quantity,
+  0
+);
+
+
+const tshirtCount = cart.reduce(
+  (count, item) =>
+    item.category === "Tees"
+      ? count + item.quantity
+      : count,
+  0
+);
+
+
+const discount =
+  tshirtCount >= 3
+    ? subtotal * 0.20
+    : 0;
+
+
+const total = subtotal - discount;
 
   return (
     <main
@@ -217,25 +235,77 @@ export default function CartPage() {
             </h2>
 
             <div
-              className="
-                mt-8
-                flex
-                justify-between
-                text-xl
-              "
-            >
-              <span>Total</span>
+className="
+mt-8
+space-y-4
+"
+>
 
-              <span
-                className="
-                  font-black
-                  text-red-500
-                "
-              >
-                {total} EGP
-              </span>
-            </div>
+<div
+className="
+flex
+justify-between
+text-zinc-400
+"
+>
+<span>Subtotal</span>
 
+<span>
+{subtotal} EGP
+</span>
+
+</div>
+
+
+
+{discount > 0 && (
+
+<div
+className="
+flex
+justify-between
+text-green-500
+font-bold
+"
+>
+
+<span>
+3 T-Shirts Discount (20%)
+</span>
+
+<span>
+-{discount} EGP
+</span>
+
+</div>
+
+)}
+
+
+
+<div
+className="
+flex
+justify-between
+text-xl
+"
+>
+
+<span>Total</span>
+
+<span
+className="
+font-black
+text-red-500
+"
+>
+{total} EGP
+</span>
+
+</div>
+
+
+</div>
             <Link
               href="/checkout"
               className="

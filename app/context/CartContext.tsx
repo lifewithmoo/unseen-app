@@ -17,6 +17,7 @@ type CartItem = {
   image: string;
   size: string;
   quantity: number;
+  category?: string;
 };
 
 
@@ -349,26 +350,36 @@ export function CartProvider({
 
 
 
-  const total = cart.reduce(
-
-    (sum, item) =>
-
-      sum +
-
-      Number(
-        item.price.replace(
-          " EGP",
-          ""
-        )
-      ) *
-
-      item.quantity,
+  const subtotal = cart.reduce(
+  (sum, item) =>
+    sum + Number(item.price.replace(" EGP", "")) * item.quantity,
+  0
+);
 
 
-    0
+const tshirtCount = cart.reduce(
+  (count, item) => {
 
-  );
+    if(item.category === "Tees"){
+      return count + item.quantity;
+    }
 
+    return count;
+
+  },
+  0
+);
+
+
+
+const discount =
+  tshirtCount >= 3
+    ? subtotal * 0.20
+    : 0;
+
+
+
+const total = subtotal - discount;
 
 
 
