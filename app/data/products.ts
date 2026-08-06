@@ -21,11 +21,10 @@ export const products = [
   
 
     sizes: {
-      S: 3,
-      M: 10,
-      L: 5,
-      XL: 0,
-    },
+  M: 3,
+  L: 3,
+  XL: 3,
+}
 
   },
 
@@ -49,11 +48,10 @@ category: "Tees",
     
 
     sizes: {
-      S: 2,
-      M: 8,
-      L: 6,
-      XL: 2,
-    },
+  M: 3,
+  L: 3,
+  XL: 3,
+}
 
   },
 
@@ -77,12 +75,11 @@ category: "Tees",
 
     
 
-    sizes: {
-      S: 5,
-      M: 8,
-      L: 6,
-      XL: 3,
-    },
+  sizes: {
+  M: 3,
+  L: 3,
+  XL: 3,
+}
 
   },
 
@@ -106,12 +103,11 @@ category: "Tees",
 
     
 
-    sizes: {
-      S: 4,
-      M: 8,
-      L: 7,
-      XL: 3,
-    },
+ sizes: {
+  M: 3,
+  L: 3,
+  XL: 3,
+}
 
   },
 
