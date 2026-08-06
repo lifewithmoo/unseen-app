@@ -91,27 +91,35 @@ TOTAL: ${finalTotal} EGP
 Thank you.
 `;
 
+const orderId = `UN-${new Date()
+  .toISOString()
+  .slice(0, 10)
+  .replace(/-/g, "")}-${Date.now().toString().slice(-3)}`;
 
+   // SEND WHATSAPP TO OWNER
 
-    const whatsappUrl =
-      `https://wa.me/201111288950?text=${encodeURIComponent(message)}`;
-
-
-
-    window.open(
-      whatsappUrl,
-      "_blank"
-    );
+await fetch("/api/send-whatsapp", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    orderId,
+    name: customer.name,
+    phone: customer.phone,
+    address: customer.address,
+    payment,
+    items: cart,
+    shippingFee,
+    total: finalTotal,
+  }),
+});
 
 
 
     // SAVE ORDER TO DASHBOARD
 
-    const orderId = `UN-${new Date()
-  .toISOString()
-  .slice(0, 10)
-  .replace(/-/g, "")}-${Date.now().toString().slice(-3)}`;
-  
+     
     const newOrder = {
 
       id: Date.now(),
