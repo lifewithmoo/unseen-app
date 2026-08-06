@@ -18,13 +18,11 @@ type Product = {
   hoverImage: string;
   description?: string;
 
-  sizes?: {
-    S:number;
-    M:number;
-    L:number;
-    XL:number;
-  };
-
+  sizes: {
+  M: number;
+  L: number;
+  XL: number;
+};
 };
 
 
